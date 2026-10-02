@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" data-theme="ocean"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Purchase request to payment | interactive workflow</title>
+<!DOCTYPE html><html lang="en" data-theme="ocean"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Interactive workflow</title>
 <style>
 /* ---------- THEMES. Default: <html data-theme="..."> ; viewers switch in the header; ?theme=name forces one ----------
    bg page, surface canvas/panel/white cards, fg main text, ink dark fills (trigger, panel header), accent/accent2 highlights and
@@ -6,7 +6,7 @@
 :root,[data-theme=ocean]{--bg:#fff;--surface:#fff;--fg:#0F1F33;--ink:#0F1F33;--accent:#2A9D8F;--accent2:#1F7A6F;--deep:#1D4E89;--outfill:#1D4E89;--outborder:#1D4E89;--tint:#CDE6E2;--soft:#F1F8F7;--soft2:#E6F1EF;--text:#2E3A48;--muted:#6E7A8A;--faint:#B9C3CF;--rule:#D5DEE7;--line:#223344;--hl:#F2FBF9;--who:#1D4E89;--trigger-border:#0F1F33}
 [data-theme=forest]{--bg:#fff;--surface:#fff;--fg:#1B2A1F;--ink:#1B2A1F;--accent:#5B8C5A;--accent2:#3F6B3E;--deep:#7A4E2D;--outfill:#7A4E2D;--outborder:#7A4E2D;--tint:#D9E6CF;--soft:#F4F8F0;--soft2:#EAF1E3;--text:#2F3B33;--muted:#6F7C72;--faint:#B8C4BA;--rule:#D6DED3;--line:#26332A;--hl:#F6FAF1;--who:#7A4E2D;--trigger-border:#1B2A1F}
 [data-theme=ember]{--bg:#fff;--surface:#fff;--fg:#1C1C1E;--ink:#1C1C1E;--accent:#E07A2F;--accent2:#B85E1C;--deep:#6B2E2E;--outfill:#6B2E2E;--outborder:#6B2E2E;--tint:#F5D9C4;--soft:#FBF4EE;--soft2:#F6EBE2;--text:#3A3A3C;--muted:#777780;--faint:#C4C4C8;--rule:#E1DAD3;--line:#2B2B2B;--hl:#FFF7F0;--who:#6B2E2E;--trigger-border:#1C1C1E}
-[data-theme=graphite]{--bg:#121316;--surface:#1C1E22;--fg:#F0F0F0;--ink:#000;--accent:#F5C518;--accent2:#E0B000;--deep:#B4B9C2;--outfill:#4A4F58;--outborder:#C9CCD2;--tint:#4A4012;--soft:#262930;--soft2:#2E3036;--text:#D6D6D6;--muted:#9A9EA6;--faint:#55595F;--rule:#3A3D43;--line:#C9CCD2;--hl:#3B3410;--who:#F5C518;--trigger-border:#F5C518}
+[data-theme=graphite]{--bg:#121316;--surface:#1C1E22;--fg:#F0F0F0;--ink:#000;--accent:#F5C518;--accent2:#E0B000;--deep:#FFFFFF;--outfill:#4A4F58;--outborder:#C9CCD2;--tint:#4A4012;--soft:#262930;--soft2:#2E3036;--text:#D6D6D6;--muted:#9A9EA6;--faint:#55595F;--rule:#3A3D43;--line:#C9CCD2;--hl:#3B3410;--who:#F5C518;--trigger-border:#F5C518}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Segoe UI","Helvetica Neue",Arial,sans-serif}
 #scaler{transform-origin:top left;width:2120px;padding:26px 30px 20px}
 header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:20px}header h1{margin:0;font-size:24px;color:var(--fg)}header h1 span{color:var(--accent)}header p{margin:4px 0 0;color:var(--muted);font-size:13px}
@@ -22,7 +22,8 @@ header{display:flex;align-items:flex-start;justify-content:space-between;margin-
 .node:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.18)}.node .kind{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}.node .label{font-weight:700;font-size:13px;line-height:1.2;color:var(--fg)}.node .sub{font-size:10.5px;margin-top:4px;line-height:1.25}.node .who{font-size:10px;color:var(--who);margin-top:5px;font-weight:700}.node .resp{font-size:9.5px;color:var(--muted);margin-top:2px;font-style:italic}
 .trigger{background:var(--ink);border-color:var(--trigger-border)}.trigger .label,.trigger .sub{color:#fff}.trigger .who{color:var(--accent)}.trigger .kind,.trigger .resp{color:#BDBDBD}
 .proc{background:var(--soft);border-color:var(--accent)}.tool{background:var(--tint);border-color:var(--accent2)}.out{background:var(--outfill);border-color:var(--outborder)}.out .label,.out .sub{color:#fff}.out .who{color:var(--tint)}.out .kind,.out .resp{color:#C9C9C9}.store{background:var(--surface);border-color:var(--faint)}.dec{background:var(--surface);border-color:var(--fg);border-style:dashed}
-[data-theme=graphite] .out .who{color:var(--accent)}
+[data-theme=graphite] .out .who{color:var(--accent)}[data-theme=graphite] .panel .pill.in,[data-theme=graphite] .panel .pill.out{color:#000}
+.node:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .dim{opacity:.18}.sel{box-shadow:0 0 0 3px var(--fg),0 8px 22px rgba(0,0,0,.25)}.miss{opacity:.12}
 svg{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
 #arr path{fill:var(--line)}#arrIn path{fill:var(--accent2)}#arrOut path{fill:var(--deep)}
@@ -41,19 +42,23 @@ svg{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:no
 <marker id="arrIn" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
 <marker id="arrOut" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
 </defs></svg>
-</div><aside class="panel" id="panel"></aside></div>
+</div><aside class="panel" id="panel" aria-live="polite"></aside></div>
 <div class="legend" id="legend"></div>
-<div class="footer"><div>Example process · replace with your own title</div><span>Keys: Esc reset · / search · click a card, click again to clear · v1.2</span></div></div>
+<div class="footer"><div id="foot"></div><span>Keys: click a card, or Tab to it and press Enter · click again or Esc to clear · / search</span></div></div>
 <script>
 // ============================ CONTENT: edit everything in this block ============================
 const TITLE="Purchase request to payment";
-// Stages: label and x origin of the column (cards start 30 px right of the divider). 3 to 5 stages.
+// Footer line under the diagram: owner, date, process version, or a note.
+const FOOTER="Example process · replace with your own title";
+// Stages: key (one character; every card id starts with its stage key), label, and x of the divider (cards start 30 px right of it). 3 to 5 stages.
 const STAGES=[{key:"a",label:"Request",x:0},{key:"b",label:"Approve",x:420},{key:"c",label:"Buy",x:840},{key:"d",label:"Pay",x:1260}];
-// Optional bottom lane for shared enablers. Set LANE=null to remove it (the canvas then ends under the lowest card).
-const LANE={key:"s",label:"Controls & systems",top:745};
+// Optional bottom lane for shared enablers (key: one character, not used by a stage). Set LANE=null to remove it (the canvas then ends under the lowest card).
+const LANE={key:"s",label:"Controls &amp; systems",top:745};
 // Optional dashed groups drawn behind cards: {label,x,y,w,h}. Leave [] for none.
 const G=[{label:"Approval chain",x:440,y:46,w:200,h:524}];
 // Cards. Grid: columns x = 30, 450, 870, 1290 (second card in a column at +200); rows y = 60, 240, 420, 600; lane cards y = 800.
+// Card width in px: 180 for 3 or 4 stages, 150 for 5 stages (see the five-stage grid in SKILL.md).
+const CARD_W=180;
 // N: [id, type, x, y, title, subtitle, accountable, what, why, good, kpi, responsible?]   (responsible is optional)
 const N=[
  ["a1","trigger",30,60,"Need identified","Goods or a service required","Requester","Someone needs goods or a service that is not in stock and not covered by an existing contract.","Every purchase starts here. An unclear need becomes a wrong order later.","The need is written down with a specification, quantity and required date before anything is raised.","Requests returned for clarification","Any employee"],
@@ -94,12 +99,13 @@ const E=[
 const KIND={trigger:"Trigger",proc:"Process step",tool:"Control / standard",out:"Output / forum",store:"Data store",dec:"Decision"};
 const SW={trigger:["var(--ink)","var(--trigger-border)"],proc:["var(--soft)","var(--accent)"],tool:["var(--tint)","var(--accent2)"],out:["var(--outfill)","var(--outborder)"],store:["var(--surface)","var(--faint)"],dec:["var(--surface)","var(--fg)"]};
 const STAGE={};STAGES.forEach((s,i)=>STAGE[s.key]=`${i+1} · ${s.label}`);if(LANE)STAGE[LANE.key]=LANE.label;
+document.title=TITLE+' | interactive workflow';document.getElementById('foot').textContent=FOOTER;
 const c=document.getElementById('c'),svg=document.getElementById('svg'),panel=document.getElementById('panel');const pos={},byId={};
 const H=LANE?990:Math.max(...N.map(n=>n[3]))+190; /* canvas height: fixed with a lane, otherwise ends 50 px under the lowest card */ c.style.height=H+'px';panel.style.height=H+'px';
 if(LANE){const l=document.createElement('div');l.className='lane';l.style.top=LANE.top+'px';l.innerHTML=`<div class="lane-label">${LANE.label}</div>`;c.appendChild(l);}
 STAGES.forEach((s,i)=>{const d=document.createElement('div');d.className='stage';d.style.left=s.x+'px';c.appendChild(d);const t=document.createElement('div');t.className='stage-label';t.style.left=(s.x+30)+'px';t.innerHTML=`<b>${i+1}</b>${s.label}`;c.appendChild(t);});
 G.forEach(g=>{const d=document.createElement('div');d.className='group';d.style.cssText=`left:${g.x}px;top:${g.y}px;width:${g.w}px;height:${g.h}px`;d.innerHTML=`<div class="group-label">${g.label}</div>`;c.appendChild(d);});
-N.forEach(n=>{const [id,type,x,y,label,sub,who,,,,,resp]=n;const el=document.createElement('div');el.className='node '+type;el.id='n-'+id;el.style.left=x+'px';el.style.top=y+'px';el.innerHTML=`<div class="kind">${KIND[type]}</div><div class="label">${label}</div><div class="sub">${sub}</div><div class="who">${who}</div>${resp?`<div class="resp">Responsible: ${resp}</div>`:''}`;c.appendChild(el);pos[id]={el,x,y,type};byId[id]=n;});
+N.forEach(n=>{const [id,type,x,y,label,sub,who,,,,,resp]=n;const el=document.createElement('div');el.className='node '+type;el.id='n-'+id;el.style.left=x+'px';el.style.top=y+'px';el.style.width=CARD_W+'px';el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',KIND[type]+': '+label);el.innerHTML=`<div class="kind">${KIND[type]}</div><div class="label">${label}</div><div class="sub">${sub}</div><div class="who">${who}</div>${resp?`<div class="resp">Responsible: ${resp}</div>`:''}`;c.appendChild(el);pos[id]={el,x,y,type};byId[id]=n;});
 const NS='http://www.w3.org/2000/svg';const edges=[],labelGroups=[];
 E.forEach(spec=>{const {f,t,label,pts,lab,rot,anchor,bus}=spec;const P=pts.map(p=>p.slice());const n=P.length;const [ax,ay]=P[n-2],[bx,by]=P[n-1];const len=Math.hypot(bx-ax,by-ay);const k=Math.max(0,len-3)/len;P[n-1]=[ax+(bx-ax)*k,ay+(by-ay)*k];
  const R=8;let d=`M${P[0][0]},${P[0][1]}`;for(let i=1;i<n-1;i++){const [x0,y0]=P[i-1],[x1,y1]=P[i],[x2,y2]=P[i+1];const dx1=Math.sign(x1-x0),dy1=Math.sign(y1-y0),dx2=Math.sign(x2-x1),dy2=Math.sign(y2-y1);const r=Math.min(R,Math.hypot(x1-x0,y1-y0)/2,Math.hypot(x2-x1,y2-y1)/2);d+=` L${x1-dx1*r},${y1-dy1*r} Q${x1},${y1} ${x1+dx2*r},${y1+dy2*r}`;}d+=` L${P[n-1][0]},${P[n-1][1]}`;
@@ -117,8 +123,8 @@ let trace=false;
 function syncHeights(){panel.style.height='auto';const h=Math.max(H,panel.scrollHeight);c.style.height=h+'px';panel.style.height=h+'px';if(typeof fit==='function')fit();}
 function defaultPanel(){panel.innerHTML=`<div class="head"><div class="kind">Context panel</div><h2>Select a card</h2><div class="stage-tag">${TITLE}</div></div><div class="body"><h3>How to read the diagram</h3><p>Stages run left to right.${LANE?' The bottom lane holds the standards, data and forums that every stage shares.':''}</p><h3>What the cards mean</h3><ul>${Object.keys(KIND).filter(k=>counts[k]).map(k=>`<li><b>${KIND[k]}</b>: ${({trigger:'what starts the cycle.',proc:'an action with an accountable owner.',dec:'a branch with labelled outcomes.',store:'where information lives between steps.',tool:'the rule, matrix or plan a step follows.',out:'where people answer for results.'})[k]}</li>`).join('')}</ul><h3>What the arrows mean</h3><p>Each arrow is labelled with what passes between two steps. When a card is selected, <span class="pill in">incoming</span> arrows feed it and <span class="pill out">outgoing</span> arrows are fed by it.</p><p class="hint">Click any card for its purpose, why it matters, what good looks like, who is accountable and responsible, its inputs and outputs, and the KPI it reports. Tick "whole chain" in a card's panel to follow every upstream and downstream step.</p></div>`;syncHeights();}
 function showPanel(id){const [,type,,,label,sub,who,what,why,good,kpi,resp]=byId[id];const ins=edges.filter(e=>e.t===id).map(e=>`<li><b>${byId[e.f][4]}</b>: ${e.label}</li>`).join('')||'<li class="hint">none: start of the cycle</li>';const outs=edges.filter(e=>e.f===id).map(e=>`<li><b>${byId[e.t][4]}</b>: ${e.label}</li>`).join('')||'<li class="hint">none: end of the cycle</li>';const up=reach(id,'up').size,dn=reach(id,'down').size;
- panel.innerHTML=`<div class="head"><div class="kind">${KIND[type]}</div><h2>${label}</h2><div class="stage-tag">${STAGE[id[0]]||''} · ${sub}</div><button class="copy" id="copy">Copy link</button></div><div class="body"><h3>Accountable</h3><div class="who">${who}</div>${resp?`<div class="resp">Responsible: ${resp}</div>`:''}<h3>What happens here</h3><p>${what}</p><h3>Why it matters</h3><p>${why}</p><h3>What good looks like</h3><p>${good}</p><h3>Fed by</h3><ul>${ins}</ul><h3>Feeds</h3><ul>${outs}</ul><h3>Reach along the flow</h3><div class="reach"><div><b>${up}</b>upstream step${up===1?'':'s'}<small>everything that has to happen before this card</small></div><div><b>${dn}</b>downstream step${dn===1?'':'s'}<small>everything this card eventually feeds</small></div></div><label class="tr"><input type="checkbox" id="trace" ${trace?'checked':''}> Highlight the whole chain instead of direct links only</label><p class="hint" style="margin:4px 0 0">Feedback arrows back to the trigger are not followed, so the counts differ per card.</p><h3>KPI it reports</h3><span class="pill">${kpi}</span></div>`;
- document.getElementById('copy').onclick=ev=>{ev.stopPropagation();const u=location.href.split('#')[0]+'#card='+id;try{navigator.clipboard.writeText(u);ev.target.textContent='Copied';setTimeout(()=>ev.target.textContent='Copy link',1200);}catch(e){prompt('Link',u);}};
+ panel.innerHTML=`<div class="head"><div class="kind">${KIND[type]}</div><h2>${label}</h2><div class="stage-tag">${STAGE[id[0]]||''} · ${sub}</div><button class="copy" id="copy">Copy link</button></div><div class="body"><h3>Accountable</h3><div class="who">${who}</div>${resp?`<div class="resp">Responsible: ${resp}</div>`:''}<h3>What happens here</h3><p>${what}</p><h3>Why it matters</h3><p>${why}</p><h3>What good looks like</h3><p>${good}</p><h3>Fed by</h3><ul>${ins}</ul><h3>Feeds</h3><ul>${outs}</ul><h3>Reach along the flow</h3><div class="reach"><div><b>${up}</b>upstream step${up===1?'':'s'}<small>everything that has to happen before this card</small></div><div><b>${dn}</b>downstream step${dn===1?'':'s'}<small>everything this card eventually feeds</small></div></div><label class="tr"><input type="checkbox" id="trace" ${trace?'checked':''}> Highlight the whole chain instead of direct links only</label><p class="hint" style="margin:4px 0 0">Feedback and return arrows are not followed, so the counts show how far along the flow this card sits.</p><h3>KPI it reports</h3><span class="pill">${kpi}</span></div>`;
+ document.getElementById('copy').onclick=ev=>{ev.stopPropagation();const b=ev.target,u=location.href.split('#')[0]+'#card='+id;const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy link',1200);},ask=()=>prompt('Copy this link',u);if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(done,ask);else ask();};
  document.getElementById('trace').onchange=ev=>{trace=ev.target.checked;select(id,true);};syncHeights();}
 let selected=null;
 function clear(){Object.values(pos).forEach(p=>p.el.classList.remove('dim','sel'));edges.forEach(e=>{e.path.classList.remove('in','outg','dim');e.tx.classList.remove('hl','dim');});}
@@ -126,16 +132,16 @@ function reset(){selected=null;clear();defaultPanel();if(location.hash)history.r
 function select(id,keep){if(!keep&&selected===id){reset();return;}clear();selected=id;const up=trace?reach(id,'up'):new Set(),dn=trace?reach(id,'down'):new Set();const keepSet=new Set([id,...up,...dn]);
  edges.forEach(e=>{const inc=e.t===id||(trace&&!isBack(e)&&up.has(e.t)&&(up.has(e.f)||e.f===id)),out=e.f===id||(trace&&!isBack(e)&&dn.has(e.f)&&(dn.has(e.t)||e.t===id));if(inc){e.path.classList.add('in');e.tx.classList.add('hl');keepSet.add(e.f);}else if(out){e.path.classList.add('outg');e.tx.classList.add('hl');keepSet.add(e.t);}else{e.path.classList.add('dim');e.tx.classList.add('dim');}});
  Object.entries(pos).forEach(([k,q])=>{if(!keepSet.has(k))q.el.classList.add('dim');});pos[id].el.classList.add('sel');showPanel(id);history.replaceState(null,'',location.pathname+location.search+'#card='+id);}
-Object.entries(pos).forEach(([id,p])=>p.el.addEventListener('click',ev=>{ev.stopPropagation();select(id);}));
+Object.entries(pos).forEach(([id,p])=>{p.el.addEventListener('click',ev=>{ev.stopPropagation();select(id);});p.el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();select(id);}});});
 c.addEventListener('click',reset);panel.addEventListener('click',ev=>ev.stopPropagation());
 // search
 const q=document.getElementById('q');q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();Object.entries(pos).forEach(([id,p])=>{const n=byId[id];const hit=!v||[n[4],n[5],n[6],n[11]||''].join(' ').toLowerCase().includes(v);p.el.classList.toggle('miss',!hit);});});
 document.addEventListener('keydown',ev=>{if(ev.key==='Escape'){q.value='';q.dispatchEvent(new Event('input'));q.blur();reset();}else if(ev.key==='/'&&document.activeElement!==q){ev.preventDefault();q.focus();}});
-// theme: ?theme=name in the URL, header buttons, remembered per browser when storage is available
-function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.querySelectorAll('.themes button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));try{localStorage.setItem('wf-theme',t);}catch(e){}}
-document.querySelectorAll('.themes button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.t)));
-(function(){let t=new URLSearchParams(location.search).get('theme');if(!t){try{t=localStorage.getItem('wf-theme');}catch(e){}}setTheme(t&&document.querySelector(`.themes button[data-t="${t}"]`)?t:document.documentElement.getAttribute('data-theme')||'ocean');})();
-// deep link #card=id
-defaultPanel();(function(){const m=location.hash.match(/card=([\w-]+)/);if(m&&pos[m[1]])select(m[1],true);})();
+// theme: ?theme=name in the URL, header buttons; a viewer's pick is remembered for this page only, when storage is available
+const TKEY='wf-theme:'+location.pathname;function setTheme(t,keep){document.documentElement.setAttribute('data-theme',t);document.querySelectorAll('.themes button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));if(keep)try{localStorage.setItem(TKEY,t);}catch(e){}}
+document.querySelectorAll('.themes button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.t,true)));
+(function(){let t=new URLSearchParams(location.search).get('theme');if(!t){try{t=localStorage.getItem(TKEY);}catch(e){}}setTheme(t&&document.querySelector(`.themes button[data-t="${t}"]`)?t:document.documentElement.getAttribute('data-theme')||'ocean');})();
+// deep link #card=id, on load and when the link changes in an open page
+defaultPanel();function fromHash(){const m=location.hash.match(/card=([\w-]+)/);if(m&&pos[m[1]]&&selected!==m[1])select(m[1],true);}fromHash();window.addEventListener('hashchange',fromHash);
 function fit(){const s=Math.min(1,(window.innerWidth-8)/2120);document.getElementById('scaler').style.transform=`scale(${s})`;document.body.style.height=(document.getElementById('scaler').offsetHeight*s+10)+'px';}window.addEventListener('resize',fit);fit();syncHeights();
 </script></body></html>

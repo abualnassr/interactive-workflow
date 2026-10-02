@@ -22,7 +22,7 @@ And in Ember:
 
 ![Incident to improvement, Ember theme](examples/incident-to-improvement%20-%20ember.png)
 
-Open either HTML file in the `examples` folder in a browser and click a card. The panel shows who is accountable and responsible, what happens, why it matters, what good looks like, what feeds the card, what it feeds, how far its reach goes along the flow, and the KPI it reports. Tick "whole chain" to follow every upstream and downstream step. Esc resets, `/` searches, Copy link gives a link straight to a card, and the buttons top right switch theme.
+Open either HTML file in the `examples` folder in a browser and click a card. The panel shows who is accountable and responsible, what happens, why it matters, what good looks like, what feeds the card, what it feeds, how far its reach goes along the flow, and the KPI it reports. Tick "whole chain" to follow every upstream and downstream step. Esc resets, `/` searches, Copy link gives a link straight to a card, and the buttons top right switch theme. Cards also work from the keyboard: Tab to a card, Enter to select it.
 
 ## Install
 
@@ -123,12 +123,14 @@ Use `python3` on macOS and Linux. It prints the audit findings as JSON (an empty
 - A fixed grid (180 x 140 px cards, four columns, four rows, an optional enablers lane) so nothing overlaps.
 - Explicit orthogonal arrow routes with labels that say what passes, never "next".
 - Six card types: trigger, process step, decision, data store, control or standard, output or forum.
-- An audit (`scripts/wf_check.py`) that fails the build on duplicate ids, arrows to unknown cards, unconnected cards, cards off the canvas, arrows through cards, labels on cards or on each other, lines through text, and clipped card text.
+- An audit (`scripts/wf_check.py`) that fails the build on duplicate ids, arrows to unknown cards, unconnected cards, cards, arrows or labels off the canvas, arrows through cards, arrows on top of each other, labels on cards or on each other, lines through text, titles on cards, clipped card text, and console errors.
 - Four themes as CSS variables: Ocean, Forest, Ember, Graphite. Add a client brand by copying one block.
 
 ## Notes
 
-- The page uses the Inter font when installed and falls back to Segoe UI or Arial; the screenshots above were rendered with the fallback.
+- Made for a laptop or desktop screen. On a phone the whole page scales down to fit, so pinch to zoom.
+- The page uses the Inter font when installed and falls back to Segoe UI or Arial.
+- A viewer's theme choice is remembered for that page only; `?theme=graphite` (or any theme name) in the URL forces one.
 - In a plain chat with no shell or browser (claude.ai without code execution, for example) the skill builds the page and tells you the audit was not run.
 - Feedback arrows (into the trigger, or marked `back:true`) are drawn but not followed when counting reach, so the numbers mean something.
 
