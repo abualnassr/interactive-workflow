@@ -6,7 +6,7 @@ Built for process maps, operating models, governance frameworks and work flows w
 
 ## What it looks like
 
-A visitor clicking through the purchase example: cards, a decision, the whole-chain trace, Copy link, search and the four themes (sped up 1.5 times; [full-resolution MP4](docs/demo.mp4)):
+A visitor clicking through the purchase example: cards, a decision, the whole-chain trace, Copy link, search and the four themes (sped up 1.5 times; [download the full-resolution MP4](https://github.com/abualnassr/interactive-workflow/raw/main/docs/demo.mp4), 48 s, 4 MB):
 
 ![Animated walk-through of an interactive workflow](docs/demo.gif)
 
