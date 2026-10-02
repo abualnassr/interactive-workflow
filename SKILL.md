@@ -2,10 +2,10 @@
 name: interactive-workflow
 description: Build an interactive HTML workflow or process diagram (cards on a fixed grid, orthogonal labelled arrows, click-to-highlight with whole-chain trace, right-hand context panel, search, deep links, four switchable colour themes including a dark one) plus a PNG for slides. Use when asked for an interactive workflow, process flow, work process, process map, operating model map, framework map, or to turn a Mermaid flowchart into something clickable.
 license: MIT
-metadata: {"version": "1.2.4", "author": "Bandar Abualnassr"}
+metadata: {"version": "1.2.5", "author": "Bandar Abualnassr"}
 ---
 
-# Interactive workflow diagram (v1.2.4)
+# Interactive workflow diagram (v1.2.5)
 
 Produces one self-contained HTML file (no external dependencies, works offline, opens in any browser) that maps a process as cards and labelled arrows. Clicking a card highlights what feeds it and what it feeds (direct links, or the full upstream and downstream chain) and opens a context panel on the right. The page ships with four colour themes the viewer can switch between in the header, a search box, keyboard shortcuts and deep links to a card. A PNG of the canvas is produced for slides.
 
@@ -48,7 +48,7 @@ To add a client brand, copy one `[data-theme=...]` block, rename it, replace the
 
 ## 3. Layout on a fixed grid (this is what prevents overlaps)
 
-- Canvas 1680 px wide, 990 px high with a lane, otherwise 50 px under the lowest card, inside a 2120 px page (canvas + 20 px gap + 400 px panel). `fit()` scales the whole page to the window width. The panel never scrolls: `syncHeights()` makes the canvas and the panel the same height, growing both when a card has long context text, and the lane stretches to the new bottom.
+- Canvas 1680 px wide, 990 px high with a lane, otherwise 50 px under the lowest card, inside a 2160 px page (30 px margin, canvas, 20 px gap, 400 px panel, 30 px margin). `fit()` scales the whole page to the window width. The panel never scrolls: `syncHeights()` makes the canvas and the panel the same height, growing both when a card has long context text, and the lane stretches to the new bottom.
 - Cards are 140 px high and `CARD_W` (180) px wide, with `overflow:hidden`. Column x origins: 30, 450, 870, 1290 (stage dividers at 0, 420, 840, 1260); card centres at x 120, 540, 960, 1380.
 - A second card side by side in the same column and row sits at column x + `CARD_W` + 20 (x + 200 with 180 px cards). The 20 px between the two has no room for an arrow or a label, so connect them through a row gap instead; to feed both from one card, fan out through the row gap above them. The second card also narrows the vertical gap to its right to 40 px (410 to 450, 830 to 870, 1250 to 1290), and in column 4 (x 1490 to 1670) it closes the right-edge corridor.
 - Five stages: set `CARD_W=150`; stage dividers at 0, 336, 672, 1008, 1344; card x origins 30, 366, 702, 1038, 1374 (centres 105, 441, 777, 1113, 1449); vertical gaps 180 to 366, 516 to 702, 852 to 1038, 1188 to 1374, right edge 1524 to 1680. Narrower cards wrap sooner, so keep titles short and let the audit's clipping check confirm.
@@ -86,7 +86,7 @@ The file below is a complete working example (purchase request to payment, 13 ca
 [data-theme=ember]{--bg:#fff;--surface:#fff;--fg:#1C1C1E;--ink:#1C1C1E;--accent:#E07A2F;--accent2:#B85E1C;--deep:#6B2E2E;--outfill:#6B2E2E;--outborder:#6B2E2E;--tint:#F5D9C4;--soft:#FBF4EE;--soft2:#F6EBE2;--text:#3A3A3C;--muted:#777780;--faint:#C4C4C8;--rule:#E1DAD3;--line:#2B2B2B;--hl:#FFF7F0;--who:#6B2E2E;--trigger-border:#1C1C1E}
 [data-theme=graphite]{--bg:#121316;--surface:#1C1E22;--fg:#F0F0F0;--ink:#000;--accent:#F5C518;--accent2:#E0B000;--deep:#FFFFFF;--outfill:#4A4F58;--outborder:#C9CCD2;--tint:#4A4012;--soft:#262930;--soft2:#2E3036;--text:#D6D6D6;--muted:#9A9EA6;--faint:#55595F;--rule:#3A3D43;--line:#C9CCD2;--hl:#3B3410;--who:#F5C518;--trigger-border:#F5C518}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Segoe UI","Helvetica Neue",Arial,sans-serif}
-#scaler{transform-origin:top left;width:2120px;padding:26px 30px 20px}
+#scaler{transform-origin:top left;width:2160px;padding:26px 30px 20px}
 header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:20px}header h1{margin:0;font-size:24px;color:var(--fg)}header h1 span{color:var(--accent)}header p{margin:4px 0 0;color:var(--muted);font-size:13px}
 .tools{display:flex;gap:14px;align-items:center;flex:none}
 .themes{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--muted)}.themes button{font:inherit;font-size:11px;padding:4px 10px;border-radius:3px;border:1px solid var(--rule);background:var(--surface);color:var(--text);cursor:pointer}.themes button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}.themes i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px}
@@ -221,7 +221,7 @@ document.querySelectorAll('.themes button').forEach(b=>b.addEventListener('click
 (function(){let t=new URLSearchParams(location.search).get('theme');if(!t){try{t=localStorage.getItem(TKEY);}catch(e){}}setTheme(t&&document.querySelector(`.themes button[data-t="${t}"]`)?t:document.documentElement.getAttribute('data-theme')||'ocean');})();
 // deep link #card=id, on load and when the link changes in an open page
 defaultPanel();function fromHash(){const m=location.hash.match(/card=([\w-]+)/);if(m&&pos[m[1]]&&selected!==m[1])select(m[1],true);}fromHash();window.addEventListener('hashchange',fromHash);
-function fit(){const s=Math.min(1,(window.innerWidth-8)/2120);document.getElementById('scaler').style.transform=`scale(${s})`;document.body.style.height=(document.getElementById('scaler').offsetHeight*s+10)+'px';}window.addEventListener('resize',fit);fit();syncHeights();
+function fit(){const s=Math.min(1,(window.innerWidth-8)/2160);document.getElementById('scaler').style.transform=`scale(${s})`;document.body.style.height=(document.getElementById('scaler').offsetHeight*s+10)+'px';}window.addEventListener('resize',fit);fit();syncHeights();
 </script></body></html>
 
 ```
@@ -282,11 +282,12 @@ Also check the console for errors (a missing constant silently empties the diagr
 ## 8. Deliver
 
 1. The HTML file, named `<Topic> - workflow (interactive).html`, saved in the user's working folder (or the output folder the environment designates).
-2. A PNG of the canvas for slides, in the theme that matches the deck (one per theme if the user has not chosen): `python <skill folder>/scripts/wf_check.py "<file>.html" ocean graphite` writes `<name> - <theme>.png` next to the HTML for each theme named (`<name>` is the HTML file name without `.html`); with another browser tool, screenshot the `#c` element at device scale factor 2 in a 2140 x 1160 viewport, with `?theme=<name>` on the URL. On a 16:9 slide place it about 4.9 in high, centred, with a caption line explaining the card colours.
+2. A PNG of the canvas for slides, in the theme that matches the deck (one per theme if the user has not chosen): `python <skill folder>/scripts/wf_check.py "<file>.html" ocean graphite` writes `<name> - <theme>.png` next to the HTML for each theme named (`<name>` is the HTML file name without `.html`); with another browser tool, screenshot the `#c` element at device scale factor 2 in a 2180 x 1180 viewport, with `?theme=<name>` on the URL. On a 16:9 slide place it about 4.9 in high, centred, with a caption line explaining the card colours.
 3. Tell the user the page is a single file with no dependencies; that the theme can be switched in the header or forced with `?theme=graphite` in the URL; that Esc resets, `/` searches and Copy link gives a link straight to a card; that cards work from the keyboard (Tab, then Enter); that it is made for a laptop or desktop screen (on a phone it scales down, so pinch to zoom); and that it falls back to Segoe UI or Arial where Inter is not installed.
 
 ## Changelog
 
+- 1.2.5: the page is 2160 px wide instead of 2120, so the context panel keeps a right margin and no longer touches or pokes past the window edge (at 1920 px it added a sideways scrollbar); PNG export viewport 2180 x 1180 so the canvas is captured at full size; demo animation in the README.
 - 1.2.4: audit review fixes. Template: readable incoming/outgoing labels in graphite, and white outgoing arrows there so they stand apart from the grey default arrows; generic `<title>`; Copy link falls back to showing the link when the clipboard is blocked (it used to say "Copied" anyway); cards reachable with Tab and selected with Enter or Space; a viewer's theme pick is remembered per page, so it no longer overrides other files' defaults; deep links also work when changed in an open page; tab title and footer come from `TITLE` and `FOOTER`; `CARD_W` for five stages; panel hint corrected. Audit: also flags arrows or labels outside the canvas, arrows on top of each other, arrows on a stage divider, stage, lane or group titles on cards, and text clipped at the side; `wf_check.py` waits for fonts and layout and finds the audit by its code block. Instructions: x and y are pixels, keys are one character, label rows 222/402/582, documented corridors (bottom y 955 to 985, right edge), second-card and five-stage grids, widening a stage, label placement rules, the lane-label trap, what `bus` does, HTML escaping.
 - 1.2.3: new example screenshots (one with a card selected and the context panel open); README cleanup.
 - 1.2.2: works in any agent that reads SKILL.md (Claude Code, Codex, Cursor, OpenCode, Hermes Agent, OpenClaw and others): bundled `scripts/wf_check.py` runs the audit and exports PNGs from a shell; audit step lists the options in order; audit no longer crashes on an arrow to an unknown card (it reports it); metadata on one line for loaders that only read single-line frontmatter.

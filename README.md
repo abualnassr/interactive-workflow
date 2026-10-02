@@ -6,6 +6,10 @@ Built for process maps, operating models, governance frameworks and work flows w
 
 ## What it looks like
 
+A visitor clicking through the purchase example: cards, a decision, the whole-chain trace, Copy link, search and the four themes (sped up 1.5 times; [full-resolution MP4](docs/demo.mp4)):
+
+![Animated walk-through of an interactive workflow](docs/demo.gif)
+
 Purchase request to payment, Ocean theme (default), with the decision "Within approval limit?" selected. Arrows that feed it light up in the accent colour, arrows it feeds in the second colour, everything else fades back, and the panel on the right shows its context:
 
 ![Purchase request to payment, Ocean theme, card selected](examples/purchase-request-to-payment%20-%20ocean.png)
@@ -94,7 +98,7 @@ Clone this repository into your agent's skills folder; the repository root is th
 git clone https://github.com/abualnassr/interactive-workflow
 ```
 
-Keep `SKILL.md` and `scripts/` together. The `examples` folder is only for you to look at.
+Keep `SKILL.md` and `scripts/` together. The `examples` and `docs` folders are only for you to look at.
 
 ## Use
 
