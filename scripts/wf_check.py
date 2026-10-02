@@ -3,18 +3,16 @@
 Usage:
     python scripts/wf_check.py "<Topic> - workflow (interactive).html" [theme ...]
 
-Runs the audit function in SKILL.md (the only ```js block there, read from the
-file so there is one copy of it) in headless Chromium and prints
+Runs the audit in scripts/audit.js in headless Chromium and prints
 {"findings": [...], "console_errors": [...]} as JSON. Both lists empty is a
-pass, and only then is the exit code 0. For each theme given (ocean, forest,
-ember, graphite) it saves "<name> - <theme>.png" next to the HTML file, where
+pass, and only then is the exit code 0. After a clean audit, for each theme given
+(ocean, forest, ember, graphite) it saves "<name> - <theme>.png" next to the HTML file, where
 <name> is the HTML file name without ".html".
 
 Needs Playwright:  pip install playwright && python -m playwright install chromium
 """
 import json
 import pathlib
-import re
 import sys
 
 from playwright.sync_api import sync_playwright
@@ -23,11 +21,7 @@ THEMES = {"ocean", "forest", "ember", "graphite"}
 
 
 def load_audit():
-    skill = pathlib.Path(__file__).resolve().parent.parent / "SKILL.md"
-    blocks = re.findall(r"^```js\n(.*?)^```", skill.read_text(encoding="utf-8"), re.S | re.M)
-    if len(blocks) != 1:
-        sys.exit(f"expected exactly one ```js block in {skill}, found {len(blocks)}")
-    return blocks[0]
+    return (pathlib.Path(__file__).resolve().parent / "audit.js").read_text(encoding="utf-8")
 
 
 def settle(page):
@@ -56,7 +50,7 @@ def main():
         settle(page)
         findings = page.evaluate(audit)
         saved = []
-        for theme in themes:
+        for theme in (themes if not (findings or errors) else []):
             page.goto(page_file.as_uri() + "?theme=" + theme)
             settle(page)
             out = page_file.with_name(f"{page_file.stem} - {theme}.png")
@@ -66,6 +60,8 @@ def main():
     print(json.dumps({"findings": findings, "console_errors": errors}, indent=1))
     for out in saved:
         print("saved", out)
+    if themes and (findings or errors):
+        print("no PNGs saved: fix the findings first")
     sys.exit(1 if findings or errors else 0)
 
 

@@ -30,7 +30,7 @@ Open either HTML file in the `examples` folder in a browser and click a card. Th
 
 ## Install
 
-The skill is a plain `SKILL.md` folder in the open [Agent Skills](https://agentskills.io) format, so it works in any agent that reads skills, not only Claude.
+The skill is a plain `SKILL.md` folder (rules in `SKILL.md`, the page template in `templates/`, the audit in `scripts/`) in the open [Agent Skills](https://agentskills.io) format, so it works in any agent that reads skills, not only Claude.
 
 ### Any agent, with the skills CLI (recommended)
 
@@ -85,10 +85,10 @@ Download `interactive-workflow-v*.zip` from the [latest release](https://github.
 Aider has no skills folder, so load the file as read-only context for the session:
 
 ```
-aider --read path/to/interactive-workflow/SKILL.md
+aider --read path/to/interactive-workflow/SKILL.md --read path/to/interactive-workflow/templates/workflow.html
 ```
 
-or add it under `read:` in `.aider.conf.yml` to load it every time.
+or add both under `read:` in `.aider.conf.yml` to load them every time. The audit runs with `/run python path/to/interactive-workflow/scripts/wf_check.py "<file>.html"`.
 
 ### By hand
 
@@ -98,7 +98,7 @@ Clone this repository into your agent's skills folder; the repository root is th
 git clone https://github.com/abualnassr/interactive-workflow
 ```
 
-Keep `SKILL.md` and `scripts/` together. The `examples` and `docs` folders are only for you to look at.
+Keep `SKILL.md`, `templates/` and `scripts/` together. The `examples` and `docs` folders are only for you to look at.
 
 ## Use
 
@@ -127,7 +127,7 @@ Use `python3` on macOS and Linux. It prints the audit findings as JSON (an empty
 - A fixed grid (180 x 140 px cards, four columns, four rows, an optional enablers lane) so nothing overlaps.
 - Explicit orthogonal arrow routes with labels that say what passes, never "next".
 - Six card types: trigger, process step, decision, data store, control or standard, output or forum.
-- An audit (`scripts/wf_check.py`) that fails the build on duplicate ids, arrows to unknown cards, unconnected cards, cards, arrows or labels off the canvas, arrows through cards, arrows on top of each other, labels on cards or on each other, lines through text, titles on cards, clipped card text, and console errors.
+- An audit (`scripts/audit.js`, run by `scripts/wf_check.py` or any browser tool, at any window size) that fails the build on duplicate ids, arrows to unknown cards, unconnected cards, cards, arrows or labels off the canvas, arrows through cards, arrows on top of each other, labels on cards or on each other, lines through text, titles on cards, clipped card text, and console errors.
 - Four themes as CSS variables: Ocean, Forest, Ember, Graphite. Add a client brand by copying one block.
 
 ## Notes
