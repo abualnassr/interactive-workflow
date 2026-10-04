@@ -38,9 +38,9 @@ svg{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:no
 <div class="themes">Theme <button data-t="ocean"><i style="background:#2A9D8F"></i>Ocean</button><button data-t="forest"><i style="background:#5B8C5A"></i>Forest</button><button data-t="ember"><i style="background:#E07A2F"></i>Ember</button><button data-t="graphite"><i style="background:#F5C518;border:1px solid #333"></i>Graphite</button></div></div></header>
 <div class="layout"><div class="container" id="c">
 <svg id="svg"><defs>
-<marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
-<marker id="arrIn" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
-<marker id="arrOut" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="arrIn" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+<marker id="arrOut" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
 </defs></svg>
 </div><aside class="panel" id="panel" aria-live="polite"></aside></div>
 <div class="legend" id="legend"></div>
@@ -75,27 +75,32 @@ const N=[
  ["s2","tool",450,800,"Approved supplier list","Qualified and rated suppliers","Procurement manager","The list of suppliers that passed qualification, with ratings from past performance.","Buying from unknown suppliers is where quality, safety and fraud risks enter.","Every active supplier rated within the last year; poor performers removed or on a plan.","Suppliers rated in the last year","Supplier quality officer"],
  ["s3","store",870,800,"ERP","One record from request to payment","IT application owner","Request, approvals, order, receipt, invoice and payment live in one system.","A single record is what makes the three-way match and the monthly review possible.","No purchases outside the system; mandatory fields complete on more than 95 percent of records.","Purchases outside the ERP"]
 ];
-// Arrows: {f,t,label,pts:[[x,y],...],lab:[x,y],anchor?:"start"|"end",rot?:-90,bus?:"id",back?:true}. pts start on the source edge, end on the target edge.
+// Arrows: {f,t,label,pts:[[x,y],...],lab:[x,y],anchor?:"start"|"end",rot?:-90,bus?:"id",back?:true}.
+// pts start exactly on the source card's edge and end exactly on the target card's edge; the first segment leaves the card and the last
+// segment arrives from outside, at right angles to that edge. Write those two points with at(id, side, offset): side is "top", "bottom",
+// "left" or "right", offset is px along the edge from its left or top end (default: the middle; keep it 12 px or more from a corner).
 // back:true marks a feedback arrow that the reach counts and whole-chain highlight do not follow (arrows into a trigger card are treated as feedback automatically).
 const E=[
- {f:"a1",t:"a2",label:"requirement",pts:[[120,200],[120,240]],lab:[130,222],anchor:"start"},
- {f:"a2",t:"b1",label:"purchase request",pts:[[210,300],[360,300],[360,130],[450,130]],lab:[285,288]},
- {f:"b1",t:"b2",label:"budget confirmed",pts:[[540,200],[540,240]],lab:[550,222],anchor:"start"},
- {f:"b2",t:"c1",label:"yes: approved",pts:[[630,290],[750,290],[750,130],[870,130]],lab:[690,278]},
- {f:"b2",t:"b3",label:"no: above limit",pts:[[540,380],[540,420]],lab:[550,402],anchor:"start"},
- {f:"b3",t:"c1",label:"approved at next level",pts:[[630,490],[790,490],[790,170],[870,170]],lab:[710,478]},
- {f:"c1",t:"c2",label:"purchase order",pts:[[960,200],[960,240]],lab:[970,222],anchor:"start"},
- {f:"c1",t:"d1",label:"order details",pts:[[1050,130],[1290,130]],lab:[1170,118]},
- {f:"c2",t:"d1",label:"goods receipt",pts:[[1050,310],[1170,310],[1170,170],[1290,170]],lab:[1128,298]},
- {f:"d1",t:"d2",label:"matched invoice",pts:[[1380,200],[1380,240]],lab:[1390,222],anchor:"start"},
- {f:"d2",t:"d3",label:"payment record",pts:[[1380,380],[1380,420]],lab:[1390,402],anchor:"start"},
- {f:"s3",t:"d1",label:"receipt and invoice data",pts:[[1050,870],[1240,870],[1240,220],[1310,220],[1310,200]],lab:[1240,560],rot:-90},
- {f:"s1",t:"b2",label:"approval limits",pts:[[210,840],[300,840],[300,330],[450,330]],lab:[300,600],rot:-90},
- {f:"s2",t:"c1",label:"approved supplier, terms",pts:[[630,840],[820,840],[820,100],[870,100]],lab:[820,600],rot:-90},
- {f:"c2",t:"s3",label:"goods receipt posted",pts:[[960,380],[960,800]],lab:[970,600],anchor:"start"},
- {f:"d3",t:"s2",label:"supplier performance ratings",pts:[[1380,560],[1380,965],[540,965],[540,940]],lab:[960,953],back:true}
+ {f:"a1",t:"a2",label:"requirement",pts:[at("a1","bottom"),at("a2","top")],lab:[130,222],anchor:"start"},
+ {f:"a2",t:"b1",label:"purchase request",pts:[at("a2","right",60),[360,300],[360,130],at("b1","left")],lab:[285,288]},
+ {f:"b1",t:"b2",label:"budget confirmed",pts:[at("b1","bottom"),at("b2","top")],lab:[550,222],anchor:"start"},
+ {f:"b2",t:"c1",label:"yes: approved",pts:[at("b2","right",50),[750,290],[750,130],at("c1","left")],lab:[690,278]},
+ {f:"b2",t:"b3",label:"no: above limit",pts:[at("b2","bottom"),at("b3","top")],lab:[550,402],anchor:"start"},
+ {f:"b3",t:"c1",label:"approved at next level",pts:[at("b3","right"),[790,490],[790,170],at("c1","left",110)],lab:[710,478]},
+ {f:"c1",t:"c2",label:"purchase order",pts:[at("c1","bottom"),at("c2","top")],lab:[970,222],anchor:"start"},
+ {f:"c1",t:"d1",label:"order details",pts:[at("c1","right"),at("d1","left")],lab:[1170,118]},
+ {f:"c2",t:"d1",label:"goods receipt",pts:[at("c2","right"),[1170,310],[1170,170],at("d1","left",110)],lab:[1128,298]},
+ {f:"d1",t:"d2",label:"matched invoice",pts:[at("d1","bottom"),at("d2","top")],lab:[1390,222],anchor:"start"},
+ {f:"d2",t:"d3",label:"payment record",pts:[at("d2","bottom"),at("d3","top")],lab:[1390,402],anchor:"start"},
+ {f:"s3",t:"d1",label:"receipt and invoice data",pts:[at("s3","right"),[1240,870],[1240,220],[1310,220],at("d1","bottom",20)],lab:[1240,560],rot:-90},
+ {f:"s1",t:"b2",label:"approval limits",pts:[at("s1","right",40),[300,840],[300,330],at("b2","left",90)],lab:[300,600],rot:-90},
+ {f:"s2",t:"c1",label:"approved supplier, terms",pts:[at("s2","right",40),[820,840],[820,100],at("c1","left",40)],lab:[820,600],rot:-90},
+ {f:"c2",t:"s3",label:"goods receipt posted",pts:[at("c2","bottom"),at("s3","top")],lab:[970,600],anchor:"start"},
+ {f:"d3",t:"s2",label:"supplier performance ratings",pts:[at("d3","bottom"),[1380,965],[540,965],at("s2","bottom")],lab:[960,965],back:true}
 ];
 // ============================ ENGINE: no edits needed below ============================
+// at(): a point on a card's edge, used in E (function declarations are hoisted, so E can call it above)
+function at(id,side,off){const n=N.find(c=>c[0]===id);if(!n)throw new Error('at(): unknown card '+id);const x=n[2],y=n[3],w=CARD_W,h=140;if(side==='top')return[x+(off??w/2),y];if(side==='bottom')return[x+(off??w/2),y+h];if(side==='left')return[x,y+(off??h/2)];if(side==='right')return[x+w,y+(off??h/2)];throw new Error('at(): side must be top, bottom, left or right');}
 const KIND={trigger:"Trigger",proc:"Process step",tool:"Control / standard",out:"Output / forum",store:"Data store",dec:"Decision"};
 const SW={trigger:["var(--ink)","var(--trigger-border)"],proc:["var(--soft)","var(--accent)"],tool:["var(--tint)","var(--accent2)"],out:["var(--outfill)","var(--outborder)"],store:["var(--surface)","var(--faint)"],dec:["var(--surface)","var(--fg)"]};
 const STAGE={};STAGES.forEach((s,i)=>STAGE[s.key]=`${i+1} · ${s.label}`);if(LANE)STAGE[LANE.key]=LANE.label;
@@ -107,8 +112,8 @@ STAGES.forEach((s,i)=>{const d=document.createElement('div');d.className='stage'
 G.forEach(g=>{const d=document.createElement('div');d.className='group';d.style.cssText=`left:${g.x}px;top:${g.y}px;width:${g.w}px;height:${g.h}px`;d.innerHTML=`<div class="group-label">${g.label}</div>`;c.appendChild(d);});
 N.forEach(n=>{const [id,type,x,y,label,sub,who,,,,,resp]=n;const el=document.createElement('div');el.className='node '+type;el.id='n-'+id;el.style.left=x+'px';el.style.top=y+'px';el.style.width=CARD_W+'px';el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',KIND[type]+': '+label);el.innerHTML=`<div class="kind">${KIND[type]}</div><div class="label">${label}</div><div class="sub">${sub}</div><div class="who">${who}</div>${resp?`<div class="resp">Responsible: ${resp}</div>`:''}`;c.appendChild(el);pos[id]={el,x,y,type};byId[id]=n;});
 const NS='http://www.w3.org/2000/svg';const edges=[],labelGroups=[];
-E.forEach(spec=>{const {f,t,label,pts,lab,rot,anchor,bus}=spec;const P=pts.map(p=>p.slice());const n=P.length;const [ax,ay]=P[n-2],[bx,by]=P[n-1];const len=Math.hypot(bx-ax,by-ay);const k=Math.max(0,len-3)/len;P[n-1]=[ax+(bx-ax)*k,ay+(by-ay)*k];
- const R=8;let d=`M${P[0][0]},${P[0][1]}`;for(let i=1;i<n-1;i++){const [x0,y0]=P[i-1],[x1,y1]=P[i],[x2,y2]=P[i+1];const dx1=Math.sign(x1-x0),dy1=Math.sign(y1-y0),dx2=Math.sign(x2-x1),dy2=Math.sign(y2-y1);const r=Math.min(R,Math.hypot(x1-x0,y1-y0)/2,Math.hypot(x2-x1,y2-y1)/2);d+=` L${x1-dx1*r},${y1-dy1*r} Q${x1},${y1} ${x1+dx2*r},${y1+dy2*r}`;}d+=` L${P[n-1][0]},${P[n-1][1]}`;
+E.forEach(spec=>{const {f,t,label,pts,lab,rot,anchor,bus}=spec;const P=pts.map(p=>p.slice());const n=P.length;const [ax,ay]=P[n-2],[bx,by]=P[n-1];const len=Math.hypot(bx-ax,by-ay);const k=Math.max(0,len-1)/len;P[n-1]=[ax+(bx-ax)*k,ay+(by-ay)*k];
+ const R=8;let d=`M${P[0][0]},${P[0][1]}`;for(let i=1;i<n-1;i++){const [x0,y0]=P[i-1],[x1,y1]=P[i],[x2,y2]=P[i+1];const dx1=Math.sign(x1-x0),dy1=Math.sign(y1-y0),dx2=Math.sign(x2-x1),dy2=Math.sign(y2-y1);let r=Math.min(R,Math.hypot(x1-x0,y1-y0)/2,Math.hypot(x2-x1,y2-y1)/2);if(i===n-2)r=Math.max(0,Math.min(r,Math.hypot(x2-x1,y2-y1)-12));d+=` L${x1-dx1*r},${y1-dy1*r} Q${x1},${y1} ${x1+dx2*r},${y1+dy2*r}`;}d+=` L${P[n-1][0]},${P[n-1][1]}`;
  const path=document.createElementNS(NS,'path');path.setAttribute('d',d);path.setAttribute('class','edge');svg.appendChild(path);
  const g=document.createElementNS(NS,'g');g.setAttribute('class','lbl');const rct=document.createElementNS(NS,'rect');const tx=document.createElementNS(NS,'text');tx.textContent=label;tx.setAttribute('x',lab[0]);tx.setAttribute('y',lab[1]);tx.setAttribute('text-anchor',anchor||'middle');tx.setAttribute('dominant-baseline','middle');g.appendChild(rct);g.appendChild(tx);if(rot)g.setAttribute('transform',`rotate(${rot} ${lab[0]} ${lab[1]})`);labelGroups.push(g);svg.appendChild(g);
  const bb=tx.getBBox();rct.setAttribute('x',bb.x-5);rct.setAttribute('y',bb.y-2);rct.setAttribute('width',bb.width+10);rct.setAttribute('height',bb.height+4);edges.push({f,t,label,path,tx:g,bus,back:spec.back});});

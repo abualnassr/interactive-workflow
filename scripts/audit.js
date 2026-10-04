@@ -27,17 +27,32 @@
       if (p[0]===q[0] && r[0]===t[0] && Math.abs(p[0]-r[0]) < 3 && span(p[1],q[1],r[1],t[1]) > 6) bad.push('arrow-overlap '+a.f+'>'+a.t+' / '+b.f+'>'+b.t); })); }));
   // vertical arrow runs on or beside a dashed stage divider
   STAGES.forEach(st => { if (!st.x) return; E.forEach((e,i) => segs[i].forEach(([p,q]) => { if (p[0]===q[0] && Math.abs(p[0]-st.x) < 10) bad.push('arrow-on-divider '+e.f+'>'+e.t+' / '+st.label); })); });
-  // arrows start and end on the right cards, and cross no other card (path points are already in canvas px)
+  // arrow ends: the first point exactly on the source card's edge and the last exactly on the target's edge, each segment meeting
+  // its edge at right angles from outside (not running along it, not starting or ending inside the card), 12 px or more from a corner
+  const side = ([x,y], n) => { const T = 2, inX = x >= n.l-T && x <= n.r+T, inY = y >= n.t-T && y <= n.b+T;
+    const s = [];
+    if (Math.abs(x-n.l) <= T && inY) s.push('left'); if (Math.abs(x-n.r) <= T && inY) s.push('right');
+    if (Math.abs(y-n.t) <= T && inX) s.push('top'); if (Math.abs(y-n.b) <= T && inX) s.push('bottom');
+    return s.length === 1 ? s[0] : (s.length ? 'corner' : null); };
   const inside = (x,y,n,pad=0) => x>n.l-pad && x<n.r+pad && y>n.t-pad && y<n.b+pad;
-  edges.forEach(e => { const L = e.path.getTotalLength(); const p1 = e.path.getPointAtLength(L); const p0 = e.path.getPointAtLength(0); const t = nodes.find(n=>n.id===e.t), f = nodes.find(n=>n.id===e.f);
-    if (!t || !f) return; if (!inside(p1.x,p1.y,t,6)) bad.push('end '+e.f+'>'+e.t); if (!inside(p0.x,p0.y,f,6)) bad.push('start '+e.f+'>'+e.t);
-    const crossed = new Set(); for (let s=4; s<L-4; s+=3){ const p = e.path.getPointAtLength(s); nodes.forEach(n => { if (n.id!==e.f && n.id!==e.t && inside(p.x,p.y,n,-1)) crossed.add(n.id); }); }
+  const fromOutside = (sd, [x,y], [qx,qy]) => ({left: qx < x && qy === y, right: qx > x && qy === y, top: qy < y && qx === x, bottom: qy > y && qx === x})[sd];
+  const nearCorner = (sd, [x,y], n) => (sd === 'left' || sd === 'right') ? (y - n.t < 12 || n.b - y < 12) : (x - n.l < 12 || n.r - x < 12);
+  E.forEach(e => { const f = nodes.find(n => n.id === e.f), t = nodes.find(n => n.id === e.t); if (!f || !t || e.pts.length < 2) return;
+    const P = e.pts, a = P[0], z = P[P.length-1], id = e.f+'>'+e.t;
+    [['start', a, P[1], f], ['end', z, P[P.length-2], t]].forEach(([k, pt, nb, n]) => { const sd = side(pt, n);
+      if (!sd) bad.push(k+' off the edge of '+n.id+' '+id);
+      else if (sd === 'corner' || nearCorner(sd, pt, n)) bad.push(k+' at a corner of '+n.id+' '+id);
+      else if (k === 'end' && Math.hypot(pt[0]-nb[0], pt[1]-nb[1]) < 16) bad.push('end segment of '+id+' is shorter than 16 px, too short for the arrowhead');
+      else if (!fromOutside(sd, pt, nb)) bad.push(k+(inside(nb[0],nb[1],n,-1) ? ' comes from inside ' : (nb[0]===pt[0] || nb[1]===pt[1]) ? ' runs along the edge of ' : ' meets the edge of ')+n.id+(inside(nb[0],nb[1],n,-1) || nb[0]===pt[0] || nb[1]===pt[1] ? '' : ' at an angle (the next waypoint is not lined up with it)')+' '+id); }); });
+  // arrows cross no card, including their own source and target (path points are already in canvas px)
+  edges.forEach(e => { const L = e.path.getTotalLength(); const own = new Set([e.f, e.t]);
+    const crossed = new Set(); for (let s=4; s<L-4; s+=3){ const p = e.path.getPointAtLength(s); nodes.forEach(n => { if (inside(p.x,p.y,n,own.has(n.id) ? -2 : -1)) crossed.add(n.id); }); }
     if (crossed.size) bad.push('cross '+e.f+'>'+e.t+':'+[...crossed]); });
   // arrow labels: inside the canvas, off cards, off each other, and no line runs through them
   const labs = [...document.querySelectorAll('.lbl')].map(g => { const r = box(g); return {t:g.textContent, l:r.l, top:r.t, r:r.r, b:r.b}; });
   const ov = (a,b) => a.l < b.r && b.l < a.r && a.top < b.b && b.top < a.b;
   labs.forEach((a,i) => { if (a.l < -0.5 || a.top < -0.5 || a.r > W+0.5 || a.b > H+0.5) bad.push('label outside canvas '+a.t);
-    nodes.forEach(n => { if (ov(a,{l:n.l,r:n.r,top:n.t,b:n.b})) bad.push('label-on-card '+a.t+' / '+n.id); });
+    nodes.forEach(n => { if (ov(a,{l:n.l-4,r:n.r+4,top:n.t-4,b:n.b+4})) bad.push('label-on-card '+a.t+' / '+n.id+' (labels keep 4 px clear of cards)'); });
     labs.slice(i+1).forEach(b => { if (ov(a,b)) bad.push('label-label '+a.t+' / '+b.t); }); });
   edges.forEach(e => { const L = e.path.getTotalLength(); for (let s=0; s<L; s+=4){ const p = e.path.getPointAtLength(s); labs.forEach(a => { if (a.t !== e.label && !(e.bus && edges.some(o=>o.bus===e.bus && o.label===a.t)) && p.x>a.l && p.x<a.r && p.y>a.top && p.y<a.b) bad.push('line-through-label '+e.f+'>'+e.t+' / '+a.t); }); } });
   // stage, lane and group titles: no line through them, no label or card on them
