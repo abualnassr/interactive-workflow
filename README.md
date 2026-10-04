@@ -8,7 +8,7 @@ Real processes are more than the happy path. Rejections, rework, escalations and
 
 ## What it looks like
 
-A visitor clicking through the purchase example: cards, a decision, the whole-chain trace, Copy link, search and the four themes (sped up 1.5 times; [download the full-resolution MP4](https://github.com/abualnassr/interactive-workflow/raw/main/docs/demo.mp4), 48 s, 4 MB):
+A visitor clicking through the purchase example: cards, a decision, an escalation with its exception routes, the whole-chain trace, Copy link, the exception switch, search and the four themes (sped up 1.5 times; [download the full-resolution MP4](https://github.com/abualnassr/interactive-workflow/raw/main/docs/demo.mp4), 59 s, 6 MB):
 
 ![Animated walk-through of an interactive workflow](docs/demo.gif)
 
