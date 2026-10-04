@@ -2,10 +2,10 @@
 name: interactive-workflow
 description: Build an interactive HTML workflow or process diagram (cards on a fixed grid, orthogonal labelled arrows, click-to-highlight with whole-chain trace, right-hand context panel, search, deep links, four switchable colour themes including a dark one) plus a PNG for slides. Use when asked for an interactive workflow, process flow, work process, process map, operating model map, framework map, or to turn a Mermaid flowchart into something clickable.
 license: MIT
-metadata: {"version": "1.4.0", "author": "Bandar Abualnassr"}
+metadata: {"version": "1.4.1", "author": "Bandar Abualnassr"}
 ---
 
-# Interactive workflow diagram (v1.4.0)
+# Interactive workflow diagram (v1.4.1)
 
 Produces one self-contained HTML file (no external dependencies, works offline, opens in any browser) that maps a process as cards and labelled arrows. Clicking a card highlights what feeds it and what it feeds (direct links, or the full upstream and downstream chain) and opens a context panel on the right. The page ships with four colour themes the viewer can switch between in the header, a search box, keyboard shortcuts and deep links to a card. A PNG of the canvas is produced for slides.
 
@@ -16,7 +16,7 @@ Writing rules: card titles 2 to 6 words, specific verbs ("Classify severity", no
 Do not start the HTML until the following is settled. Ask the user for whatever the source material does not give. If the user pastes a Mermaid flowchart, read it for topology and meaning only (nodes become cards, edges become arrows, edge text becomes labels) and author fresh content; do not copy its styling.
 
 1. Stages (columns or swimlanes), left to right, 3 to 5.
-2. Optional bottom lane for shared enablers: standards, data stores, forums, tools. Include it only when the process really has shared enablers; otherwise set `LANE=null` and the canvas ends under the lowest card.
+2. Optional bottom lane for shared enablers: standards, data stores, forums, tools. If the request does not say, ask whether the user wants it, and suggest it when the process has shared standards, systems or forums. When the user does not want it ("no bottom lane", "no enablers", "just the stages") or the process has no shared enablers, set `LANE=null`, leave out the lane cards and their arrows, and the canvas ends under the lowest card. An enabler the user still wants on the map, such as the CMMS, becomes a normal card (a data store or control) inside the stage that uses it most, connected like any other card.
 3. Cards, maximum 20. Each card needs: id (its first character is the key of its stage or of the lane; keys are one character), type, x and y in pixels (a column origin and a row from section 3), title, one-line subtitle, accountable role, and four context fields for the panel: what happens here, why it matters, what good looks like, KPI it reports. Optionally a twelfth field, the responsible person or entity (who does the work, as opposed to who answers for it); it appears as an italic line on the card and under Accountable in the panel. Use it when the user distinguishes accountable from responsible (RACI thinking) or names individuals; leave it out otherwise.
 4. Arrows. Each needs: from, to, label. Decisions need labelled branches ("yes", "no: known failure"). Every card connects to at least one other. A loop back to the trigger is normal and goes along the top corridor; any arrow into a trigger card counts as feedback automatically, and any other return arrow (a rework loop, an escalation back) gets `back:true` so the reach counts and the whole-chain highlight do not run in circles.
 5. Optional groups: dashed boundary boxes with a small label, for a sub-loop or a boundary (for example "Learn loop", "Vendor side"). Zero to three.
@@ -113,6 +113,7 @@ Also check the console for errors (a missing constant silently empties the diagr
 
 ## Changelog
 
+- 1.4.1: the bottom lane is the user's choice: the agent asks when the request does not say, leaves it out on "no bottom lane", and moves an enabler the user still wants into a stage as a normal card.
 - 1.4.0: arrow ends. New `at(id, side, offset)` helper in the template puts arrow ends exactly on a card's edge, so agents no longer type end coordinates by hand. The audit now requires each end to sit on the edge, meet it at right angles from outside and stay 12 px from corners, flags arrows that pass through their own source or target and final segments too short for an arrowhead, and keeps labels 4 px clear of cards. Arrowheads are now a fixed 12 px (they scaled with line width, up to 24 px when highlighted), sit on a straight run even after a tight corner, and touch their card; the old check accepted an end anywhere inside the card or up to 6 px short, which let arrows overshoot, stop short or slide along a border. Examples rewritten with `at()` (rendering unchanged) and two labels moved clear of cards.
 - 1.3.0: the page template moved to `templates/workflow.html` and the audit to `scripts/audit.js`, so SKILL.md holds only the rules (about a third of its former size) and agents copy the template instead of retyping it; section 6 lists the CONTENT formats; `wf_check.py` reads `scripts/audit.js` and saves PNGs only after a clean audit. The audit now works at any window size (it used to report dozens of false findings unless the page was shown at full size, which hit agents auditing in a normal browser window) and runs itself when evaluated.
 - 1.2.5: the page is 2160 px wide instead of 2120, so the context panel keeps a right margin and no longer touches or pokes past the window edge (at 1920 px it added a sideways scrollbar); PNG export viewport 2180 x 1180 so the canvas is captured at full size; demo animation in the README.

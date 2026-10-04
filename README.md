@@ -107,6 +107,9 @@ Ask in plain language, for example:
 - "Make an interactive process flow of our change management procedure."
 - "Turn this Mermaid flowchart into a clickable workflow with a dark theme."
 - "Map our hiring process as an interactive diagram: stages, owners, decisions, systems, plus a PNG for the deck."
+- "Interactive process flow of our month-end close, without the bottom lane."
+
+The row of shared standards, systems and forums along the bottom is optional. Add "without the bottom lane" (or "no enablers") to your request to leave it out; the agent asks if you don't say.
 
 The agent will ask for whatever the source does not give (stages, cards, arrows, who is accountable), build the page, run a collision audit in a headless browser, and hand back the HTML and PNG.
 
