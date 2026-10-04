@@ -4,6 +4,7 @@
 // scripts/wf_check.py runs it in headless Chromium; any browser tool that can evaluate JavaScript can run it too.
 (() => {
   const C = document.getElementById('c'), cr = C.getBoundingClientRect();
+  const hidExc = C.classList.contains('noexc'); C.classList.remove('noexc');   // exception routes are audited even when switched off
   const k = cr.width / C.offsetWidth;                       // page scale set by fit()
   const W = C.clientWidth, H = C.clientHeight;              // canvas size in its own px (inside the border)
   const box = el => { const r = el.getBoundingClientRect(); const x = v => (v - cr.left) / k - C.clientLeft, y = v => (v - cr.top) / k - C.clientTop;
@@ -62,5 +63,6 @@
     nodes.forEach(n => { if (ov(tb,{l:n.l,r:n.r,top:n.t,b:n.b})) bad.push('text-on-card '+el.textContent+' / '+n.id); }); });
   // card text clipped at the bottom or the side
   [...document.querySelectorAll('.node')].forEach(e => { if (e.scrollHeight > e.clientHeight+1 || e.scrollWidth > e.clientWidth+1) bad.push('clipped '+e.id.slice(2)); });
+  if (hidExc) C.classList.add('noexc');
   return [...new Set(bad)];
 })()
