@@ -222,6 +222,8 @@ Per the operation's gate doctrine (rented GPU/spend · external routes with spen
 | `evidence/cadence-soul-pathpin-20261005.md` | The one residual room-approved SOUL fix, applied (file + old/new strings for audit) |
 | This repo commit | The artifact itself: diagram (audit pass), document, evidence — published to `github.com/abualnassr/interactive-workflow` |
 
+**Publication:** [PR #1](https://github.com/abualnassr/interactive-workflow/pull/1) — fork `asmodaydoescoding` → `abualnassr:main`, mergeable (verified via API). Direct push with automation credentials is pull-only on that repo, so the PR is the publication path; merge to land it.
+
 ---
 
 ## 9 · Open decisions for the owner
