@@ -1,0 +1,117 @@
+{
+  "artifact": {
+    "bytes": 352550,
+    "exists": true,
+    "filename": "forge_smoke_00002_.png",
+    "path": "/data/AI-OFM-Operations/comfyui/output/forge_smoke_00002_.png",
+    "render_sha256": "73a7b00012098d24a7db65850647b2e75a10c113a0e7c3252414ca84ebdc43e9"
+  },
+  "elapsed_s": 4.83,
+  "embedded_prompt": {
+    "length": 999,
+    "present": true,
+    "sha256_of_chunk": "a4da37e4e055a8f5da453d13e687dbf3bb8e9f38f3f4e34643f1563e6222da15",
+    "triggers_present": {
+      "nyxmarlowe_v2x": false,
+      "r3alism": false
+    }
+  },
+  "finished_at": "2026-10-05T07:58:39+0300",
+  "graph": {
+    "cfg": 6.0,
+    "checkpoint": "v1-5-pruned-emaonly.safetensors",
+    "classes": [
+      "CLIPTextEncode",
+      "CheckpointLoaderSimple",
+      "EmptyLatentImage",
+      "KSampler",
+      "SaveImage",
+      "VAEDecode"
+    ],
+    "fresh_seed": 8185248131565590,
+    "height": 512,
+    "nodes": 7,
+    "prompt_text_negative": "text, watermark, signature, nsfw, nude, extra fingers, deformed",
+    "prompt_text_positive": "a plain grey ceramic mug on a wooden desk beside a closed notebook, soft window daylight, shallow depth of field, neutral product photo",
+    "prompt_text_provenance": "forge-authored smoke probe; not canonical, not Lore-authored",
+    "sampler_name": "euler",
+    "scheduler": "normal",
+    "seed_policy": "secrets.randbits(53), one seed per run, never reused",
+    "steps": 12,
+    "topology": "linear: ckpt -> clip(+/-) -> empty latent -> ksampler -> vae -> save",
+    "width": 512
+  },
+  "history_status": {
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "245c5cb1-af9b-47f8-9bd4-30acddd74ca5",
+          "timestamp": 1791176315955
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "prompt_id": "245c5cb1-af9b-47f8-9bd4-30acddd74ca5",
+          "timestamp": 1791176315955
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "245c5cb1-af9b-47f8-9bd4-30acddd74ca5",
+          "timestamp": 1791176318144
+        }
+      ]
+    ],
+    "status_str": "success"
+  },
+  "lane": "local-rtx2060",
+  "lane_scope": "smoke/diagnostics/masks/metadata/post-processing \u2014 not production",
+  "preflight": {
+    "api": "http://127.0.0.1:8188",
+    "checkpoint_available": true,
+    "comfyui_version": "0.27.0",
+    "device": "cuda:0 NVIDIA GeForce RTX 2060 : cudaMallocAsync",
+    "object_info_classes": 4519,
+    "required_nodes": {
+      "CLIPTextEncode": true,
+      "CheckpointLoaderSimple": true,
+      "EmptyLatentImage": true,
+      "KSampler": true,
+      "SaveImage": true,
+      "VAEDecode": true
+    },
+    "vram_free": 1973486344,
+    "vram_total": 6007422976
+  },
+  "prompt_id": "forge-seam-4d-1-20261005-075835",
+  "prompt_id_runtime": "245c5cb1-af9b-47f8-9bd4-30acddd74ca5",
+  "publishable": false,
+  "receipt_path": "/home/xenofon/src/interactive-workflow/artifacts/ofm-ops-pipeline/evidence/smoke/forge-smoke-receipt-20261005-075839.json",
+  "receipt_version": "smoke-receipt-v1",
+  "schema": "forge.smoke_receipt/1",
+  "spec_id": "forge-smoke:forge-seam-4d-1-20261005-075835",
+  "spec_id_class": "forge_smoke_probe",
+  "started_at": "2026-10-05T07:58:35+0300",
+  "status": "TRANCHE_COMPLETE",
+  "status_detail": "artifact rendered, hashed, embedded prompt extracted",
+  "vram_after": {
+    "index": 0,
+    "name": "cuda:0 NVIDIA GeForce RTX 2060 : cudaMallocAsync",
+    "torch_vram_free": 216793864,
+    "torch_vram_total": 234881024,
+    "type": "cuda",
+    "vram_free": 1973748488,
+    "vram_total": 6007422976
+  },
+  "written_by": "forge"
+}

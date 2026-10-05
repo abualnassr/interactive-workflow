@@ -50,7 +50,7 @@ All 16 profiles live on this machine. "Jobs" = jobs registered in that profile's
 | 3 | `cadence` | Content & calendar scheduler | ✅ | Briefs, calendar, packet/plan build; schedule-only, never releases | 0 | Digest job not yet wired (§4c-1); SOUL path pin applied 2026-10-05 (§8) |
 | 4 | `lore` | ComfyUI R&D + prompt engineering (absorbed `prompt-engineer`) | ✅ | Prompt forge owner; model/workflow contracts from source | 0 | Change-notice-to-room standing rule accepted |
 | 5 | `deanna` | HR / crew alignment; profile configs (not default) | ✅ | Staffing, SOUL/config hygiene, role boundaries | 0 | Authored cadence SOUL fix; audits crews |
-| 6 | `forge` | Local infra + runbook audit (RTX 2060 lane) | ✅ | Smoke tests, deterministic validation, hygiene audits | 0 | QA conscience; smoke receipts loop pending (§4d-1) |
+| 6 | `forge` | Local infra + runbook audit (RTX 2060 lane) | ✅ | Smoke tests, deterministic validation, hygiene audits | 1 | QA conscience; ✅ smoke-receipt write half wired + first run `TRANCHE_COMPLETE` (§4d-1) |
 | 7 | `fleetop` | 80-account social fleet operator; device/account logistics | ➖ | Phone staging (ADB), run sheets, fleet state | 0 | Staging lane verified live 2026-10-05 (§8); needs a seat in Distribution (§5b) |
 | 8 | `mint` | Fanvue monetization operator ("Coin"); publish/pricing within policy | ➖ | Fanvue drain (3×/week), chatter/offers as drafts only | 0 | Holds Fanvue MCP tokens; chatter job degraded on provider credits (§4b) |
 | 9 | `steward` | Control-room curator; Discord producers; lane oversight | ➖ | Stewardship cycles lead; lane objectives/transitions | 2 | Daily propose-pass 09:30 live |
