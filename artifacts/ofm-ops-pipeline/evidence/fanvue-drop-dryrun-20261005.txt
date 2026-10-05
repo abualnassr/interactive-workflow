@@ -1,0 +1,5 @@
+$ python3 ~/.hermes/scripts/ofm_fanvue_drop.py --dry-run   (run 2026-10-05, by Atlas)
+
+DRY next: PROD4_02bed-capture_00001_.png  audience=followers-and-subscribers
+  pending=6 posted=1
+

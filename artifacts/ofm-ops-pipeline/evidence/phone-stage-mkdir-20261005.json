@@ -1,0 +1,53 @@
+{
+  "receipts": [
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "instagram",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "threads",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "facebook",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "reddit",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "snapchat",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "telegram",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "x",
+      "mkdir": true,
+      "ok": true
+    },
+    {
+      "ts": "2026-10-05T06:18:06",
+      "app": "discord",
+      "mkdir": true,
+      "ok": true
+    }
+  ],
+  "ok": true
+}

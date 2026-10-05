@@ -1,0 +1,18 @@
+$ python3 ~/.hermes/scripts/ofm_fanvue_drop.py --status   (run 2026-10-05, by Atlas)
+
+pool counts: {'posted': 1, 'pending': 6, 'unapproved-owner': 7}
+[x]  1 PROD4_01floor-capture_00001_.png              subscribers                88769b28-9447-414e-8a5a-3d96f74b5d2b
+[ ]  2 PROD4_02bed-capture_00001_.png                followers-and-subscribers  
+[?]  3 PRODn1_mirror-capture_00001_.png              subscribers                
+[?]  4 PROD4_03rollers-capture_00001_.png            followers-and-subscribers  
+[ ]  5 PROD2_n2hairdry-capture_00001_.png            subscribers                
+[ ]  6 PROD4_04pottery-capture_00001_.png            followers-and-subscribers  
+[?]  7 PROD2_n1chair-capture_00001_.png              subscribers                
+[?]  8 PROD2_s1window-capture_00001_.png             followers-and-subscribers  
+[?]  9 PROD2_n3balcony-capture_00001_.png            subscribers                
+[ ] 10 PRODn2h04_apron-capture_00001_.png            followers-and-subscribers  
+[?] 11 PRODs1_hall-capture_00001_.png                subscribers                
+[?] 12 PRODn3_terrace-capture_00001_.png             followers-and-subscribers  
+[ ] 13 PROD4_07towel-capture_00001_.png              subscribers                
+[ ] 14 PROD5_01kitchenmorn-capture_00001_.png        followers-and-subscribers  
+

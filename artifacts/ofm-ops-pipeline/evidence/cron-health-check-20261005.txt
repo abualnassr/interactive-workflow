@@ -1,0 +1,5 @@
+$ python3 /data/AI-OFM-Operations/operations/ofm-cron-ops/check_ofm_jobs.py jobs   (run 2026-10-05, by Atlas)
+exit=1
+
+ofm-cron-jobs=attention 9/16 | ofm-weekly-analytics:streak=1; ofm-weekly-analytics:last=error; ofm-asset-hygiene:streak=1; ofm-asset-hygiene:last=error; ig-daily-fetch:disabled; ig-daily-fetch:streak=20; ig-daily-fetch:last=error; ofm-ig-health:disabled; ofm-fanvue-chatter:streak=1; ofm-fanvue-chatter:last=error; ofm-policy-digest:streak=1; ofm-policy-digest:last=error; ofm-backup-readback:streak=2; ofm-backup-readback:last=error
+

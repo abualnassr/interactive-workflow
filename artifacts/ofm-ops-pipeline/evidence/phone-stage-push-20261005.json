@@ -1,0 +1,18 @@
+{
+  "receipts": [
+    {
+      "ts": "2026-10-05T06:18:07",
+      "serial": "16a71a80",
+      "user": 0,
+      "app": "telegram",
+      "file": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PROD2_s2pots-capture_00001_.png",
+      "remote": "/sdcard/Download/OFM/Nyx/telegram/PROD2_s2pots-capture_00001_.png",
+      "size_local": 12048741,
+      "size_remote": "12048741",
+      "md5_local": "e8918f3a853a67da0263183283f47b7e",
+      "md5_remote": "e8918f3a853a67da0263183283f47b7e",
+      "ok": true
+    }
+  ],
+  "ok": true
+}
