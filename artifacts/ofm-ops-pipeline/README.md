@@ -139,7 +139,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 | # | Connection | What passes | Status |
 |---|---|---|---|
 | 1 | **Lore ↔ Forge** | validated contract → smoke pass/fail receipt back to the KB | agreed in room 2026-10-05; not mechanized |
-| 2 | **Agora ↔ Lore** | brief (persona/pillar/platform/anchors) → tested spec + failure modes + GAP list | agreed; interface defined both sides |
+| 2 | **Agora ↔ Lore** | brief (persona/pillar/platform/anchors) → tested spec + failure modes + GAP list | agreed; **Agora side written** → [`interfaces/brief-to-spec-interface-v1.md`](interfaces/brief-to-spec-interface-v1.md) + `social-command` skill; Lore counter-sign pending |
 | 3 | **Agora/Cadence ↔ Deanna** | canon/voice blessing loop on briefs & copy | agreed; not mechanized |
 | 4 | **FleetOp ↔ Distribution room** | packets → run sheet → staging receipts → post evidence | staging live; room missing (§5b) |
 | 5 | **Mint ↔ human approval queue** | chatter/offer/pricing drafts → owner queue (never auto-send) | drafts exist; queue surface not wired |
@@ -156,7 +156,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 2. **Cadence digest** → channel pick + Discord enable (owner) → Cadence job created → first fire verified.
 3. **Packet lane** → Cadence builds packets for the next approved set (after handle-binding decision) → backup alert clears.
 4. **Lore↔Forge receipts loop** → tiny spec: forge smoke writes receipt to KB path; Lore validates on next contract pass.
-5. **Agora↔Lore + Deanna loops** → written into both profiles' operating docs (same pattern as the change-notice rule).
+5. **Agora↔Lore + Deanna loops** → written into both profiles' operating docs (same pattern as the change-notice rule). *Agora↔Lore: Agora side done 2026-10-05 (contract + skill); Lore and Deanna halves pending.*
 6. **Mint draft queue** → define the queue surface (kanban or receipts/chatter + daily digest line).
 7. **Steward + new rooms** → channels/producers for the 3 rooms below; roundtable charter update.
 
