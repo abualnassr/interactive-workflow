@@ -54,7 +54,7 @@ All 16 profiles live on this machine. "Jobs" = jobs registered in that profile's
 | 7 | `fleetop` | 80-account social fleet operator; device/account logistics | ➖ | Phone staging (ADB), run sheets, fleet state | 0 | Staging lane verified live 2026-10-05 (§8); needs a seat in Distribution (§5b) |
 | 8 | `mint` | Fanvue monetization operator ("Coin"); publish/pricing within policy | ➖ | Fanvue drain (3×/week), chatter/offers as drafts only | 0 | Holds Fanvue MCP tokens; chatter job degraded on provider credits (§4b) |
 | 9 | `steward` | Control-room curator; Discord producers; lane oversight | ➖ | Stewardship cycles lead; lane objectives/transitions | 2 | Daily propose-pass 09:30 live |
-| 10 | `comfyui-pro` | ComfyUI operations (production gen) per manifest | ➖ | Production execution — *but the profile is a stub today* | 0 | ⚠ No SOUL, no model/route config — cannot hold a room seat until provisioned (§4c-6) |
+| 10 | `comfyui-pro` | ComfyUI **production generation** operator | ✅ | Owner-approved production tranches (local ComfyUI + rented lane); render receipts + failure modes | 0 | ✅ **Provisioned 2026-10-05 (§4c-6 closed)** — SOUL + free route + 69 MCP tools, identity smoke `LOADED` (§8b). Discord bot token still owner-gated |
 | 11 | `architect` | Principal software architect (design before code) | ➖ | Not in OFM loop; assigned via Atlas when needed | 0 | Support pool |
 | 12 | `coder` | Software builder (dry-run interview → plan → execute) | ➖ | Not in OFM loop | 0 | Support pool |
 | 13 | `burner` | Scratch profile (Atlas persona clone) | ➖ | Excluded from OFM by charter | 0 | Support pool |
@@ -129,7 +129,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 3. **Lore change-notice rule** — accepted as a standing rule (no silent model/workflow swaps); *mechanism not yet written into any checklist/automation.*
 4. **Packet lane for the live cycle** — **WIRED + EXECUTED 2026-10-05 07:10** (Cadence). New driver `tools/nyx_packet_lane.py` over `nyx_packet_builder.py`: reads the owner-approved platform→image map, applies the tier rule per row, writes `packets/social/*.json`. **20 packets / 20 PASS against `posting-packet-v1`**; `ofm_backup_readback.py` now rc=0; `ofm_daily_plan.py` now reads a populated dir and correctly declines to plan while gates are open. All 5 human gates stay pending, `posting_authorized=false`, scheduler `NOT_AUTHORIZED`. Evidence: [`evidence/packet-lane/`](evidence/packet-lane/README.md). **Remaining leg = owner approval only** (flip status to `APPROVED_TO_POST_MANUALLY` with the 5 gates recorded as human decisions). Handle binding (step 19, `UNBOUND` accounts) stays the upstream owner-blocked step.
 5. **Fallback provider repair (fleet-wide)** — `deepseek-v4-flash` is a dead id and the deepseek account is 402; b.ai 403; experiential 401; codex lane quota-locked (resets Oct 10). **11 profiles carry a failover chain that cannot produce a token.** Options: fund (rec: small top-up + id correction) / drop (fail loud) / **repoint to the free ladder ($0 — fleet-router ready; pool probed live)**. *Owner decision — route changes are gated.*
-6. **`comfyui-pro` provisioning** — stub profile (no SOUL, no model config). Production currently executes via scripts under Atlas. *Needs Deanna/owner provisioning before the profile can serve as the lane owner.*
+6. **`comfyui-pro` provisioning** — ✅ **CLOSED 2026-10-05 07:46** (Deanna). The pre-existing directory was an *orphan*, not a registered profile: absent from `hermes profile list`, 33-byte config, empty skills dir, **no SOUL.md / no route / no .env** — while `~/.hermes/config.yaml` already bound Discord room `room-comfyui-pro` to it. The room existed; the agent did not. Orphan preserved at `~/.hermes/profiles/.deanna-stash/comfyui-pro-orphanstub-20261005/`; re-provisioned via `hermes profile create --clone-from forge`. Now: SOUL.md (Production role + contract-v1 interface), free commandcode route, `comfyui-merged` MCP **enabled → 69 tools verified live**, identity smoke **`LOADED`**. Evidence: [`evidence/comfyui-pro-provisioning-20261005.md`](evidence/comfyui-pro-provisioning-20261005.md). *Residual gate: Discord bot token (owner).*
 7. **Kanban handoff bus** — 4 boards exist (`ofm-content-pipeline`, `ofm-cron-ops`, `ofm-factory-evidence`, `ofm-fleetop-pilot`), **all empty**; handoffs run on receipts/scripts instead. *Decision: wire it (assign boards to lanes) or retire it formally.*
 8. **Sweep keeps → posting pool** — `assets/approved/2026-10-04-sweep/` (56 masters) not wired into any posting lane; fanvue pool has 6 pending + 7 unapproved-owner; drop script drains the pool only. *Missing connection: approved sweep → pool/packet selection (owner-approved set).*
 9. **V2 test-drive venue decision** — explicit-media venue still parked from the 2026-10-01 incident (Discord home was wrong; Telegram/local candidate). *Owner decision.*
@@ -165,7 +165,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 | Room | Members | Purpose | First agenda |
 |---|---|---|---|
 | **Existing:** "Atlas, Agora, Lore, Deanna, Forge" (+ Cadence) | atlas, agora, cadence, lore, deanna, forge | Content & QA-prep lane: briefs → prompts → contracts, canon blessing, change notices | close §4d-1/2/3 loops; swipe-file decision |
-| **New:** OFM Production | atlas, lore, forge, comfyui-pro (after provisioning) | Generation lane war room: contracts → smoke → tranches → validation; tranche receipts & failure modes | comfyui-pro provisioning; first tranche after next KEEP |
+| **New:** OFM Production | atlas, lore, forge, **comfyui-pro** ✅ provisioned 2026-10-05 | Generation lane war room: contracts → smoke → tranches → validation; tranche receipts & failure modes | Discord bot token for `room-comfyui-pro`; first tranche after next KEEP |
 | **New:** OFM Distribution | atlas, cadence, fleetop, mint | Packets → phone staging → manual posting evidence → Fanvue drain; pacing vs cadence windows | packet lane kickoff; wave-2 Fanvue decision; staging receipts |
 | **New:** Fleet & Governance | atlas, deanna, steward, fleetop | Staffing, routes/creds, Discord producer rule, device fleet state; executes the fallback repair once decided | fallback repair execution plan; room/channel sync |
 
@@ -182,7 +182,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 | Plan | Prompt forge | **Lore** (job 10:30) | daily | brief + prompts + receipt | — |
 | Plan | Spend + KEEP verdict | **Asmoday** | per batch | verdict + envelope | 🚪 |
 | Produce | Contracts & smoke | **Lore** drafts / **Forge** smokes | per contract | smoke receipt | — |
-| Produce | Generation tranche | **comfyui-pro lane** (runner by Atlas) | per approved batch | renders + receipts | 🚪 spend |
+| Produce | Generation tranche | **comfyui-pro** (runner; Atlas authorizes) | per approved batch | renders + receipts | 🚪 spend |
 | Produce | Deterministic validation | **Forge** | per output | validation / quarantine | — |
 | Qualify | Owner visual QA | **Asmoday** | per batch | KEEP / KILL | 🚪 |
 | Qualify | Release & derivatives | **Atlas** (scripts) | per KEEP | derivatives + public copy + hashes | 🚪 disclosure confirm |
@@ -229,9 +229,29 @@ status. The lane was wired; the gate was left standing.
 | `evidence/sessions-inventory-20261005.md` | Agent session history ~2026-10-01→05 (305 sessions / 26,895 msgs; subagent waves, factories, room threads) |
 | `evidence/cadence-soul-pathpin-20261005.md` | The one residual room-approved SOUL fix, applied (file + old/new strings for audit) |
 | [`evidence/packet-lane/`](evidence/packet-lane/README.md) | **Packet lane wired + executed**: 20 packets, 20/20 `posting-packet-v1` PASS, readback rc=0, plan chain now reads a populated dir and correctly holds at the gate. Also records the 21-approvals-vs-11-masters asset-intake drift (5 masters absent fleet-wide) |
+| [`evidence/comfyui-pro-provisioning-20261005.md`](evidence/comfyui-pro-provisioning-20261005.md) | **§4c-6 closed**: `comfyui-pro` re-provisioned from an orphan stub → registered profile with SOUL, free route, **69 MCP tools verified live**, and an identity smoke test that proves `LOADED` (not merely configured) |
 | This repo commit | The artifact itself: diagram (audit pass), document, evidence — published to `github.com/abualnassr/interactive-workflow` |
 
 **Publication:** [PR #1](https://github.com/abualnassr/interactive-workflow/pull/1) — fork `asmodaydoescoding` → `abualnassr:main`, mergeable (verified via API). Direct push with automation credentials is pull-only on that repo, so the PR is the publication path; merge to land it.
+
+### 8b · Fleet-verification corrections (Deanna, 2026-10-05 07:45)
+
+Two findings that change the audit above. Both independently re-measured, not taken from the room.
+
+**1 · `comfyui-pro` was an orphan, not merely a stub.** §4c-6 read "stub profile — needs provisioning." More precisely: the directory existed but was **never a registered profile** (`hermes profile list` omitted it; `hermes profile create` refused with *"already exists"*). Contents were a 33-byte config, an empty skills dir, and **no SOUL.md / no route / no .env** — while `~/.hermes/config.yaml` had bound Discord room `room-comfyui-pro` (`chat_id 1540113287784701984`) to that profile since before the audit. **The room existed; the agent behind it did not.** That is why the seat looked unavailable. → now provisioned and `LOADED` (receipt above).
+
+**2 · The asset-intake drift is 2× the reported figure.** Reported: *21 approvals, 11 masters on disk, 5 absent* (`PRODs2_door`, `PROD2_s1window`, `PROD4_03rollers`, `PROD4_05cat`, `PRODn3_terrace`). Re-measured over **both** manifest sets in `assets/approved/`:
+
+| Manifest | Rows | On disk | Missing |
+|---|---|---|---|
+| `2026-10-03-launch` | 21 | 11 | **10** |
+| `2026-10-04-sweep` | 56 | 56 | 0 |
+
+The launch manifest is missing **ten**: the 5 reported, plus `PROD2_n1chair`, `PROD2_n3balcony`, `PROD4_06duvet`, `PRODn1_mirror`, `PRODs1_hall`. Every one of the 11 present files *is* in the manifest (no orphans) — this is one-sided loss, not drift in both directions.
+
+**Recovery is cheaper than assumed.** `@fleetop`'s staging ledger (`~/.hermes/state/ofm_phone_stage.jsonl`) shows 9 of the 10 were pushed to `apollo` on 2026-10-04 — so a pull may be zero-spend. **I checked: the phone-stage directory is now empty** (3 files, 0 PNGs) and an on-device `find` over `/sdcard/Download/OFM` returns **0 matches for all ten** (probe validated: `find` present on device, control file `PROD2_s2pots` confirmed present). The device copy was pruned; the ledger is a historical record of a push, not a current availability claim. → recovery is a **re-render / re-pull decision (spend)**, owner-gated. `PROD4_05cat` remains the low-urgency case (live on Fanvue, downloadable).
+
+**@cadence** — yes, add the manifest-vs-disk check to the readback manifest as a **non-optional** item. It is the same defect class as the `packets-social` readback alert you were right not to silence, and it would have caught this at intake rather than after the fact. Note it must cover *both* manifests, not just the launch batch.
 
 ---
 
