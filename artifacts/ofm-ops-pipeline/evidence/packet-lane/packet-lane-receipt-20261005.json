@@ -1,0 +1,130 @@
+{
+  "ts": "2026-10-05T07:10:20",
+  "driver": "nyx_packet_lane",
+  "map": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PLATFORM-IMAGE-MAP.md",
+  "assets": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch",
+  "mode": "EXECUTE",
+  "tier_rule": "SFW=all socials; suggestive=telegram only; explicit=fanvue only",
+  "meta_rule": "instagram/facebook emitted for the human manual lane only",
+  "venue_rule": "discord venue disabled fleet-wide; account UNBOUND",
+  "gate_rule": "all human gates pending; posting_authorized=false",
+  "warnings": [],
+  "batches": {
+    "PROD2_s1window": {
+      "error": "master missing"
+    },
+    "PROD2_s2pots": {
+      "tier": "SFW",
+      "apps": [
+        "instagram",
+        "threads",
+        "facebook",
+        "reddit",
+        "snapchat",
+        "telegram",
+        "x",
+        "discord"
+      ],
+      "master": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PROD2_s2pots-capture_00001_.png",
+      "batch_id": "prod2_s2pots",
+      "meta_manual_lane": [
+        "instagram",
+        "facebook"
+      ],
+      "discord_venue_disabled": true,
+      "builder_rc": 0,
+      "builder_out": " validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s2pots-reddit.json\n  snapchat: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s2pots-snapchat.json\n  telegram: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s2pots-telegram.json\n  x: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s2pots-x.json\n  discord: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s2pots-discord.json"
+    },
+    "PROD2_s3kneel": {
+      "tier": "SFW",
+      "apps": [
+        "instagram",
+        "threads",
+        "facebook",
+        "reddit",
+        "snapchat",
+        "telegram",
+        "x",
+        "discord"
+      ],
+      "master": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PROD2_s3kneel-capture_00001_.png",
+      "batch_id": "prod2_s3kneel",
+      "meta_manual_lane": [
+        "instagram",
+        "facebook"
+      ],
+      "discord_venue_disabled": true,
+      "builder_rc": 0,
+      "builder_out": "dated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s3kneel-reddit.json\n  snapchat: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s3kneel-snapchat.json\n  telegram: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s3kneel-telegram.json\n  x: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s3kneel-x.json\n  discord: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod2_s3kneel-discord.json"
+    },
+    "PROD4_02bed": {
+      "tier": "suggestive",
+      "apps": [
+        "telegram"
+      ],
+      "master": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PROD4_02bed-capture_00001_.png",
+      "batch_id": "prod4_02bed",
+      "meta_manual_lane": [],
+      "discord_venue_disabled": false,
+      "builder_rc": 0,
+      "builder_out": "packet-builder BUILD prod4_02bed: 1 app(s), failures=none\n  telegram: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod4_02bed-telegram.json"
+    },
+    "PROD4_03rollers": {
+      "error": "master missing"
+    },
+    "PROD4_04pottery": {
+      "tier": "suggestive",
+      "apps": [
+        "telegram"
+      ],
+      "master": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PROD4_04pottery-capture_00001_.png",
+      "batch_id": "prod4_04pottery",
+      "meta_manual_lane": [],
+      "discord_venue_disabled": false,
+      "builder_rc": 0,
+      "builder_out": "packet-builder BUILD prod4_04pottery: 1 app(s), failures=none\n  telegram: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod4_04pottery-telegram.json"
+    },
+    "PROD4_05cat": {
+      "error": "master missing"
+    },
+    "PROD5_01kitchenmorn": {
+      "tier": "suggestive",
+      "apps": [
+        "telegram"
+      ],
+      "master": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PROD5_01kitchenmorn-capture_00001_.png",
+      "batch_id": "prod5_01kitchenmorn",
+      "meta_manual_lane": [],
+      "discord_venue_disabled": false,
+      "builder_rc": 0,
+      "builder_out": "packet-builder BUILD prod5_01kitchenmorn: 1 app(s), failures=none\n  telegram: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prod5_01kitchenmorn-telegram.json"
+    },
+    "PRODn2h04_apron": {
+      "tier": "suggestive",
+      "apps": [
+        "telegram"
+      ],
+      "master": "/data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch/PRODn2h04_apron-capture_00001_.png",
+      "batch_id": "prodn2h04_apron",
+      "meta_manual_lane": [],
+      "discord_venue_disabled": false,
+      "builder_rc": 0,
+      "builder_out": "packet-builder BUILD prodn2h04_apron: 1 app(s), failures=none\n  telegram: validated=True packet=/data/AI-OFM-Operations/operations/nyx-launch-001/packets/social/prodn2h04_apron-telegram.json"
+    },
+    "PRODn3_terrace": {
+      "error": "master missing"
+    },
+    "PRODs2_door": {
+      "error": "master missing"
+    }
+  },
+  "packets_planned": 20,
+  "ok": false,
+  "failures": [
+    "PROD2_s1window: master not found in /data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch",
+    "PROD4_03rollers: master not found in /data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch",
+    "PROD4_05cat: master not found in /data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch",
+    "PRODn3_terrace: master not found in /data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch",
+    "PRODs2_door: master not found in /data/AI-OFM-Operations/operations/nyx-launch-001/assets/approved/2026-10-03-launch"
+  ]
+}

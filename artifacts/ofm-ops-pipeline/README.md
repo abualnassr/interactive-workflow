@@ -117,7 +117,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 | ofm-policy-digest | last run 09-28 error, streak 1 | same window; next run Mon 09:30 | Atlas (watch) |
 | ofm-asset-hygiene | 2026-10-05 03:20 error | `HTTP 429: usage limit reached` (runner quota — provider cluster) | provider fix (§4c-5) |
 | ofm-fanvue-chatter | 2026-10-04 error | `HTTP 400: insufficient credits` — draft pass can't call its model | provider fix (§4c-5) |
-| ofm-backup-readback | streak 2, ALERT | **`MISSING packets-social: …/packets/social`** — the packet dir was never built for the launch cycle (phone-staging lane bypassed it); readback expectation vs lane reality | Cadence/Atlas — build the packet lane or update the checklist (§4c-4) |
+| ofm-backup-readback | streak 2, ALERT | **`MISSING packets-social: …/packets/social`** — the packet dir was never built for the launch cycle (phone-staging lane bypassed it); readback expectation vs lane reality | **RESOLVED 2026-10-05 07:10 — Cadence built the lane, not the checklist** (§4c-4) |
 | ig-daily-fetch | disabled, streak 20 | parked by design after the 2026-09-30 IG suspension (pause verified 09-30) | owner — unpark decision |
 | ofm-ig-health | disabled | same park | owner — unpark decision |
 | hermes-bug-loop *(platform)* | exit 2 `read-issue`, streak 14 | platform tooling (separate lane) | maintenance/coder |
@@ -127,7 +127,7 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 1. **Cadence daily digest job** (07:00 EEST, fires only when slots exist) — blocked on: (a) channel target pick (#content-batches exists; #content-calendar does not; text-to-Atlas is the honest default), (b) `platforms.discord.enabled: false` on every profile. *Missing connection: Cadence job → chosen surfacing target.*
 2. **Agora swipe-file account list** — **BLOCKED_ON_OWNER** (standing blocker declared in room).
 3. **Lore change-notice rule** — accepted as a standing rule (no silent model/workflow swaps); *mechanism not yet written into any checklist/automation.*
-4. **Packet lane for the live cycle** — the manual lane (staging tree + platform map) posted the launch set; `packets/social/` was never built, so (a) backup-readback alerts, (b) daily plan stays silent, (c) phone stager's packet mode goes unused. *Missing connection: packet builder → `packets/social/*.json` → owner approve → daily plan + stager consume.* Also note handle binding (step 19, `UNBOUND` accounts) is the upstream owner-blocked step.
+4. **Packet lane for the live cycle** — **WIRED + EXECUTED 2026-10-05 07:10** (Cadence). New driver `tools/nyx_packet_lane.py` over `nyx_packet_builder.py`: reads the owner-approved platform→image map, applies the tier rule per row, writes `packets/social/*.json`. **20 packets / 20 PASS against `posting-packet-v1`**; `ofm_backup_readback.py` now rc=0; `ofm_daily_plan.py` now reads a populated dir and correctly declines to plan while gates are open. All 5 human gates stay pending, `posting_authorized=false`, scheduler `NOT_AUTHORIZED`. Evidence: [`evidence/packet-lane/`](evidence/packet-lane/README.md). **Remaining leg = owner approval only** (flip status to `APPROVED_TO_POST_MANUALLY` with the 5 gates recorded as human decisions). Handle binding (step 19, `UNBOUND` accounts) stays the upstream owner-blocked step.
 5. **Fallback provider repair (fleet-wide)** — `deepseek-v4-flash` is a dead id and the deepseek account is 402; b.ai 403; experiential 401; codex lane quota-locked (resets Oct 10). **11 profiles carry a failover chain that cannot produce a token.** Options: fund (rec: small top-up + id correction) / drop (fail loud) / **repoint to the free ladder ($0 — fleet-router ready; pool probed live)**. *Owner decision — route changes are gated.*
 6. **`comfyui-pro` provisioning** — stub profile (no SOUL, no model config). Production currently executes via scripts under Atlas. *Needs Deanna/owner provisioning before the profile can serve as the lane owner.*
 7. **Kanban handoff bus** — 4 boards exist (`ofm-content-pipeline`, `ofm-cron-ops`, `ofm-factory-evidence`, `ofm-fleetop-pilot`), **all empty**; handoffs run on receipts/scripts instead. *Decision: wire it (assign boards to lanes) or retire it formally.*
@@ -207,6 +207,14 @@ Re-verified live this session: `check_ofm_jobs.py` + drop dry-run + phone stagin
 
 Per the operation's gate doctrine (rented GPU/spend · external routes with spend exposure · public posting/scheduling · DMs/mass messages/PPV/pricing · explicit publishing venue · canon/identity changes · account creation/login recovery · handle binding · platform-policy calls · complaint/chargeback handling). None were executed in producing this artifact. Open gates right now: **spend envelope** (fallback repair + next tranche), **handle binding** (blocks packets), **manual posts** (owner from apollo), **wave-2 Fanvue confirm**, **v2 venue**, **swipe-file list**.
 
+**Packet-approval gate (added 2026-10-05 07:1x, Cadence):** 20 packet files now sit at
+`packets/social/*.json` with all five human gates pending. Turning any of them into a
+scheduled or posted item is a human act — the owner (or an explicitly authorized operator)
+records the five gates as `human_decision` entries and flips status to
+`APPROVED_TO_POST_MANUALLY`. Agents do not flip that field; `nyx_packet_lane.py` writes
+`READY_FOR_HUMAN_REVIEW` unconditionally and `ofm_daily_plan.py` consumes only the approved
+status. The lane was wired; the gate was left standing.
+
 ---
 
 ## 8 · Evidence that execution has begun (2026-10-05)
@@ -220,6 +228,7 @@ Per the operation's gate doctrine (rented GPU/spend · external routes with spen
 | `evidence/cron-registry-20261005.md` | All 28 jobs with last-run status — the audit's source table |
 | `evidence/sessions-inventory-20261005.md` | Agent session history ~2026-10-01→05 (305 sessions / 26,895 msgs; subagent waves, factories, room threads) |
 | `evidence/cadence-soul-pathpin-20261005.md` | The one residual room-approved SOUL fix, applied (file + old/new strings for audit) |
+| [`evidence/packet-lane/`](evidence/packet-lane/README.md) | **Packet lane wired + executed**: 20 packets, 20/20 `posting-packet-v1` PASS, readback rc=0, plan chain now reads a populated dir and correctly holds at the gate. Also records the 21-approvals-vs-11-masters asset-intake drift (5 masters absent fleet-wide) |
 | This repo commit | The artifact itself: diagram (audit pass), document, evidence — published to `github.com/abualnassr/interactive-workflow` |
 
 **Publication:** [PR #1](https://github.com/abualnassr/interactive-workflow/pull/1) — fork `asmodaydoescoding` → `abualnassr:main`, mergeable (verified via API). Direct push with automation credentials is pull-only on that repo, so the PR is the publication path; merge to land it.
@@ -233,6 +242,17 @@ Per the operation's gate doctrine (rented GPU/spend · external routes with spen
 3. **Fanvue wave-2** — confirm the 7 `unapproved-owner` items; 6 pending drain automatically starting Tue 03:00.
 4. **Create the 3 new group chats** (§5b).
 5. **V2 test-drive venue** — decide the explicit-media surface (still parked from 2026-10-01).
+6. **Packet approval for the built lane** — 20 packets at `packets/social/`, all five gates
+   pending. Approve (record 5 `human_decision` entries + flip status), or reject/needs-revision.
+   Until then the daily plan stays correctly silent. Evidence:
+   [`evidence/packet-lane/`](evidence/packet-lane/README.md).
+7. **Asset-intake drift — 21 approvals vs 11 masters on disk** (new, unowned). Five approved
+   masters are absent from the entire `nyx-launch-001` tree: `PRODs2_door`, `PROD2_s1window`,
+   `PROD4_03rollers`, `PROD4_05cat`, `PRODn3_terrace`. Same defect class as the readback alert
+   (manifest claims an artifact the filesystem can't produce) but in the intake lane. Needs an
+   owner + a readback item; recovering `PROD4_05cat` is not urgent because that image is live on
+   Fanvue and downloadable from the platform. See
+   [`evidence/packet-lane/README.md`](evidence/packet-lane/README.md) §"New finding".
 
 ---
 
