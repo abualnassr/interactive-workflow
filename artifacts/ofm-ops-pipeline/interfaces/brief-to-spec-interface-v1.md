@@ -1,6 +1,6 @@
 # Brief-to-Spec Interface v1 — Agora ↔ Lore (pillar-first input contract)
 
-> Fleet copy. Vault canonical: `Projects/AI OFM 2026 Ecosystem/Content Pipeline/Brief-to-Spec Interface v1.md`. Committed 2026-10-05 for the artifact's seam §4d-2 wiring (Agora side written; Lore counter-sign pending).
+> Fleet copy. Vault canonical: `Projects/AI OFM 2026 Ecosystem/Content Pipeline/Brief-to-Spec Interface v1.md`. Committed 2026-10-05 for the artifact's seam §4d-2 wiring (Agora side + Lore side written; counter-signed 2026-10-05).
 
 Wires the **Agora ↔ Lore** seam from this map (§4d-2, §5a-5) — same pattern as the change-notice rule: each side writes the contract into its operating docs. Authority: **Content Quality Playbook — Posts v1** (pillar-first, staged workflow, visual gate). This contract does not override any gate.
 
@@ -53,4 +53,4 @@ Binding: every ping carries its **`spec_id`**. Prompt craft stays with Lore — 
 
 - Seam §4d-3: briefs/copy touching canon or voice route to **Deanna** for blessing before advancing.
 - Roles: brief source = Cadence (pillar brief & batch scope) · drafts = Agora · prompts = Lore · smoke = Forge · approval = owner.
-- **Status:** Agora side written 2026-10-05 — wired into the `social-command` skill; this commit is the fleet-visible copy. **Lore counter-sign pending** (their operating doc intake + return shape).
+- **Status:** Both sides wired 2026-10-05 — Agora: `social-command` skill v1.1.0; Lore: `SOUL.md` §"Brief→spec interface" (intake + return shape + smoke-receipt validation). **Seam §4d-2 closed.**
