@@ -228,7 +228,7 @@ status. The lane was wired; the gate was left standing.
 | `evidence/cron-registry-20261005.md` | All 28 jobs with last-run status — the audit's source table |
 | `evidence/sessions-inventory-20261005.md` | Agent session history ~2026-10-01→05 (305 sessions / 26,895 msgs; subagent waves, factories, room threads) |
 | `evidence/cadence-soul-pathpin-20261005.md` | The one residual room-approved SOUL fix, applied (file + old/new strings for audit) |
-| [`evidence/packet-lane/`](evidence/packet-lane/README.md) | **Packet lane wired + executed**: 20 packets, 20/20 `posting-packet-v1` PASS, readback rc=0, plan chain now reads a populated dir and correctly holds at the gate. Also records the 21-approvals-vs-11-masters asset-intake drift (5 masters absent fleet-wide) |
+| [`evidence/packet-lane/`](evidence/packet-lane/README.md) | **Packet lane wired + executed**: 20 packets, 20/20 `posting-packet-v1` PASS, readback rc=0, plan chain now reads a populated dir and correctly holds at the gate. Also records the 21-approvals-vs-11-masters asset-intake drift (10 masters absent — re-measured in §8b) |
 | [`evidence/comfyui-pro-provisioning-20261005.md`](evidence/comfyui-pro-provisioning-20261005.md) | **§4c-6 closed**: `comfyui-pro` re-provisioned from an orphan stub → registered profile with SOUL, free route, **69 MCP tools verified live**, and an identity smoke test that proves `LOADED` (not merely configured) |
 | This repo commit | The artifact itself: diagram (audit pass), document, evidence — published to `github.com/abualnassr/interactive-workflow` |
 
@@ -266,13 +266,19 @@ The launch manifest is missing **ten**: the 5 reported, plus `PROD2_n1chair`, `P
    pending. Approve (record 5 `human_decision` entries + flip status), or reject/needs-revision.
    Until then the daily plan stays correctly silent. Evidence:
    [`evidence/packet-lane/`](evidence/packet-lane/README.md).
-7. **Asset-intake drift — 21 approvals vs 11 masters on disk** (new, unowned). Five approved
-   masters are absent from the entire `nyx-launch-001` tree: `PRODs2_door`, `PROD2_s1window`,
-   `PROD4_03rollers`, `PROD4_05cat`, `PRODn3_terrace`. Same defect class as the readback alert
-   (manifest claims an artifact the filesystem can't produce) but in the intake lane. Needs an
-   owner + a readback item; recovering `PROD4_05cat` is not urgent because that image is live on
-   Fanvue and downloadable from the platform. See
-   [`evidence/packet-lane/README.md`](evidence/packet-lane/README.md) §"New finding".
+7. **Asset-intake drift — 21 approvals vs 11 masters on disk (10 absent)** (new, unowned).
+   Ten approved masters are absent from the entire `nyx-launch-001` tree: `PRODs2_door`,
+   `PROD2_s1window`, `PROD4_03rollers`, `PROD4_05cat`, `PRODn3_terrace`, `PROD2_n1chair`,
+   `PROD2_n3balcony`, `PROD4_06duvet`, `PRODn1_mirror`, `PRODs1_hall` (re-measured in §8b;
+   sweep manifest 56/56 clean; one-sided loss). Needs an owner + a readback item:
+   manifest-vs-disk over **both** manifests, non-optional (Cadence to wire). Recovery decision
+   is item 9; `PROD4_05cat` is low-urgency (live on Fanvue, downloadable).
+8. **`comfyui-pro` Discord bot token** — the profile is provisioned and room
+   `room-comfyui-pro` is bound, but no token is installed; supply one or accept Discord-less
+   operation.
+9. **Recovery decision for the 10 absent masters** — spend-gated: re-render or platform
+   re-pull (the staging ledger is a historical push record; the device copy is pruned). Blocks
+   nothing today.
 
 ---
 
